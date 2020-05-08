@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:hashiru/widgets/screens/mainPage.dart';
 
+import 'package:hashiru/blocs/ranBloc.dart';
+
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => RanBloc(),
+      child: MyApp()
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {

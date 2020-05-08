@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 
 import 'package:hashiru/models/run.dart';
 
+import 'package:hashiru/provoders/apiProvider.dart';
+
 class RunBloc with ChangeNotifier {
 
   RunBloc(){
@@ -24,6 +26,7 @@ class RunBloc with ChangeNotifier {
 
   Future<void> fetchRunDistance() async {
     _runPercentage = Random().nextInt(100).toDouble();
+    await ApiProvider.readRunData();
     notifyListeners();
   }
 

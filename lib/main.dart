@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'hashiru',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.redAccent,
       ),
       // TextFieldコピペ時の問題やポップアップメニューの正しいローカライズのために
       // localizationsDelegates を指定することが必須。

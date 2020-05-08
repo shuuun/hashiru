@@ -5,12 +5,12 @@ import 'package:provider/provider.dart';
 
 import 'package:hashiru/widgets/screens/mainPage.dart';
 
-import 'package:hashiru/blocs/ranBloc.dart';
+import 'package:hashiru/blocs/runBloc.dart';
 
 void main() {
   runApp(
     ChangeNotifierProvider(
-      create: (_) => RanBloc(),
+      create: (_) => RunBloc(),
       child: MyApp()
     )
   );

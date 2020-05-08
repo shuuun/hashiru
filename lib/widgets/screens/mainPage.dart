@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:hashiru/blocs/ranBloc.dart';
+import 'package:hashiru/blocs/runBloc.dart';
 
 import 'package:hashiru/widgets/components/donutGraph.dart';
 
@@ -27,15 +27,15 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   
   @override
   Widget build(BuildContext context) {
-    final ranBloc = Provider.of<RanBloc>(context, listen: false);
+    final ranBloc = Provider.of<RunBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(title: Text('HASHIRU'),),
-      floatingActionButton: FloatingActionButton(onPressed: () => ranBloc.fetchRanDistance()),
+      floatingActionButton: FloatingActionButton(onPressed: () => ranBloc.fetchRunDistance()),
       body: SafeArea(
         child: Center(
-          child: Consumer<RanBloc>(
+          child: Consumer<RunBloc>(
             builder: (context, ran, child) {
-              return DonutGraph(percentage: ran.ranPercentage, trackColor: Colors.grey[300], completedColor: Colors.redAccent);
+              return DonutGraph(percentage: ran.runPercentage, trackColor: Colors.grey[300], completedColor: Colors.redAccent);
             },
           )
         )

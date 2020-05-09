@@ -8,9 +8,10 @@ class ApiProvider {
 
   ApiProvider._();
 
-  static final _channel = MethodChannel('hashiru');
+  static final _channel = MethodChannel('hashiru/workout');
 
   static Future<void> readRunData() async {
-    await _channel.invokeMethod('getWorkoutData');
+    final result = await _channel.invokeMethod('getWorkoutData');
+    print(result);
   }
 }

@@ -20,8 +20,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 1000))
-      ..addListener(() { 
-        // percentage.value = lerpDouble(percentage.value, randomPercentage.value, _controller.value);
+      ..addListener(() {
       });
   }
   
@@ -30,7 +29,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
     final ranBloc = Provider.of<RunBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(title: Text('HASHIRU'),),
-      floatingActionButton: FloatingActionButton(onPressed: () => ranBloc.fetchRunDistance()),
+      floatingActionButton: FloatingActionButton(onPressed: () => ranBloc.getRunDistance(month: '4')),
       body: SafeArea(
         child: Center(
           child: Consumer<RunBloc>(

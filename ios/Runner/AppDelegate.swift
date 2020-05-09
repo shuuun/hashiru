@@ -43,17 +43,17 @@ import HealthKit
       guard let workouts = samples as? [HKWorkout], error == nil else {
           return
       }
-      var dict: [String: Any] = [:]
-      var num = 0
+      var dict: [Dictionary<String, Any>] = []
       for workout in workouts {
-        num += 1
         var result: [String: Any] = [:]
+        if let distance = workout.totalDistance {
+          result.updateValue(String(distance.doubleValue(for: HKUnit.meter()) / 1000), forKey: "total_distance")
+        }
         result.updateValue(self.returnMonth(date: workout.startDate), forKey: "workout_month")
-        result.updateValue(String(format: "%@", workout.totalDistance ?? "no data"), forKey: "total_distance")
         result.updateValue(String(workout.duration.stringFromTimeInterval()), forKey: "duration")
-        dict.updateValue(result, forKey: "\(num)")
+        dict.append(result)
       }
-      result(dict as NSDictionary)
+      result(dict as Array)
     }
     
     self.healthKitStore.requestAuthorization(toShare: nil, read: readDataTypes) {

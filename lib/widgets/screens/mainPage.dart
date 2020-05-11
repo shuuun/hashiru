@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
@@ -17,21 +18,43 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
 
   AnimationController _controller;
-  Animation<double> _tween;
-  final _percentage = ValueNotifier<double>(0);
+  Animation<double> _percentageAnimation;
+  final _percentage = ValueNotifier<double>(160);
+  final GlobalKey<AnimatedCircularChartState> _chartKey = GlobalKey<AnimatedCircularChartState>();
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
-    _tween = Tween<double>(begin: 0, end: 100).animate(_controller)
-      ..addListener(() { setState(() {}); });
+    // _percentageAnimation = Tween<double>(begin: 0, end: 100).animate(_controller)
+    //   ..addListener(() { setState(() {}); });
   }
 
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+
+  List<CircularStackEntry> generateChartData(double value) {
+    List<CircularStackEntry> data = [
+      CircularStackEntry(
+        [
+          CircularSegmentEntry(value, Colors.green[300], rankKey: 'completed line')
+        ]
+      )
+    ];
+    
+    if (value > 100) {
+      data.add(
+        CircularStackEntry(
+          [
+            CircularSegmentEntry(value - 100, Colors.green[300], rankKey: 'completed line')
+          ]
+        )
+      );
+    }
+    return data;
   }
   
   @override
@@ -43,7 +66,7 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
         child: Icon(Icons.refresh),
         onPressed: () async {
           await runBloc.getRunDistance(month: '04');
-          _tween = Tween<double>(begin: 0, end: runBloc.runPercentage).animate(_controller)..addListener(() { _percentage.value = _tween.value; });
+          _percentageAnimation = Tween<double>(begin: 0, end: runBloc.runPercentage).animate(_controller)..addListener(() { _percentage.value = _percentageAnimation.value; });
           _controller.forward(from: 0.0);
         },
       ),
@@ -52,7 +75,19 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
           child: ValueListenableBuilder<double>(
             valueListenable: _percentage,
             builder: (context, percentage, child) {
-              return DonutGraph(percentage: percentage, trackColor: Colors.grey[300], completedColor: Colors.redAccent);
+              // return DonutGraph(
+              //   percentage: percentage,
+              //   isSuccess: _percentage.value >= 100,
+              //   trackColor: Colors.grey[300],
+              //   completedColor: _percentage.value <= 100 ? Colors.green[300] : Colors.redAccent[400]
+              // );
+              return AnimatedCircularChart(
+                key: _chartKey,
+                percentageValues: true,
+                size: Size(350, 350), 
+                chartType: CircularChartType.Radial,
+                initialChartData: generateChartData(percentage)
+              );
             },
           )
         )

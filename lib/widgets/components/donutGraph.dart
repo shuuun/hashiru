@@ -7,6 +7,7 @@ class DonutGraph extends StatelessWidget {
   final double height;
   final double width;
   final double percentage;
+  final bool isSuccess;
   final Color trackColor;
   final Color completedColor;
 
@@ -14,6 +15,7 @@ class DonutGraph extends StatelessWidget {
     this.height = 300,
     this.width = 300,
     @required this.percentage,
+    @required this.isSuccess,
     @required this.trackColor,
     @required this.completedColor,
   });
@@ -28,7 +30,8 @@ class DonutGraph extends StatelessWidget {
           trackColor: trackColor,
           completeColor: completedColor,
           completePercente: percentage,
-          strokeWidth: 50
+          strokeWidth: 50,
+          isSuccess: isSuccess
         ),
         child: Padding(
           padding: EdgeInsets.all(8),
@@ -44,12 +47,14 @@ class DonutGraphPainter extends CustomPainter {
   final Color completeColor;
   final double completePercente;
   final double strokeWidth;
+  final bool isSuccess;
 
   DonutGraphPainter({
     this.trackColor,
     this.completeColor,
     this.completePercente,
-    this.strokeWidth
+    this.strokeWidth,
+    this.isSuccess
   });
 
   @override
@@ -62,8 +67,8 @@ class DonutGraphPainter extends CustomPainter {
     
     final _completedLine = Paint()
       ..color = completeColor
-      ..strokeCap = StrokeCap.butt
-      ..style = PaintingStyle.stroke
+      ..strokeCap = StrokeCap.round
+      ..style = PaintingStyle.fill
       ..strokeWidth = strokeWidth;
     
     final _center = Offset(size.width / 2, size.height / 2);

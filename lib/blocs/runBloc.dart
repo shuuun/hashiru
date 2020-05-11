@@ -9,8 +9,9 @@ import 'package:hashiru/provoders/apiProvider.dart';
 
 class RunBloc with ChangeNotifier {
 
-  RunBloc(){
+  RunBloc() {
     getRunDistance();
+    notifyListeners();
   }
 
   double _runDistance;

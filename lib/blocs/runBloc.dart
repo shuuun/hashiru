@@ -23,20 +23,15 @@ class RunBloc with ChangeNotifier {
 
   final storage = FlutterSecureStorage();
 
-  void initRunModel() {
+  Future<void> getRunDistance({String month}) async {
+    await _fetchWorkoutData();
+    _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, month ?? DateTime.now().month.toString()));
 
+    notifyListeners();
   }
 
   Future<void> _fetchWorkoutData() async {
     _workouts = await ApiProvider.featchWorkoutData();
-  }
-
-  Future<void> getRunDistance({String month}) async {
-    _runPercentage = Random().nextInt(100).toDouble();
-    await _fetchWorkoutData();
-    _runPercentage = _calculatRunPercentage(_filterWorkoutList(_workouts, month ?? DateTime.now().month.toString()));
-    // _filterWorkoutList(_workouts, month ?? DateTime.now().month.toString());
-    notifyListeners();
   }
 
   List<Workout> _filterWorkoutList(List<Workout> workouts, String month) {
@@ -46,7 +41,7 @@ class RunBloc with ChangeNotifier {
     return result;
   }
 
-  double _calculatRunPercentage(List<Workout> workouts) {
+  double _calculateRunPercentage(List<Workout> workouts) {
     double runDistance = 0.0;
     final goal = 50.0;
     for (var workout in workouts) {

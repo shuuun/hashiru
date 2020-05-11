@@ -50,6 +50,7 @@ import HealthKit
           result.updateValue(String(distance.doubleValue(for: HKUnit.meter()) / 1000), forKey: "total_distance")
         }
         result.updateValue(self.returnMonth(date: workout.startDate), forKey: "workout_month")
+        result.updateValue(self.returnYear(date: workout.startDate), forKey: "workout_year")
         result.updateValue(String(workout.duration.stringFromTimeInterval()), forKey: "duration")
         dict.append(result)
       }
@@ -67,6 +68,14 @@ import HealthKit
   private func returnMonth(date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "MM"
+    formatter.locale = Locale(identifier: "en_US_POSIX")
+    let result = formatter.string(from: date)
+    return result
+  }
+  
+  private func returnYear(date: Date) -> String {
+    let formatter = DateFormatter()
+    formatter.dateFormat = "YYYY"
     formatter.locale = Locale(identifier: "en_US_POSIX")
     let result = formatter.string(from: date)
     return result

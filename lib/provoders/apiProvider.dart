@@ -15,6 +15,7 @@ class ApiProvider {
       final distance = double.parse(workout['total_distance']);
       final _workout = Workout(
         month: workout['workout_month'],
+        year: workout['workout_year'],
         distance: distance,
         duration: workout['duration']
       );

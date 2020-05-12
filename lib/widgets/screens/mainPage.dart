@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -6,9 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
-
-import 'package:hashiru/widgets/components/donutGraph.dart';
-
 
 class MainPage extends StatefulWidget {
   @override
@@ -65,33 +63,43 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
         onPressed: () async {
-          await runBloc.getRunDistance(month: '04');
-          _percentageAnimation = Tween<double>(begin: 0, end: runBloc.runPercentage).animate(_controller)..addListener(() { _percentage.value = _percentageAnimation.value; });
-          _controller.forward(from: 0.0);
+          await runBloc.getRunDistance('2020/04');
+          // _percentage.value = runBloc.runPercentage;
+          _percentage.value = Random().nextInt(200).toDouble();
+          setState(() {
+            _chartKey.currentState.updateData(generateChartData(_percentage.value));
+          });
+          // _percentageAnimation = Tween<double>(begin: 0, end: runBloc.runPercentage).animate(_controller)..addListener(() { _percentage.value = _percentageAnimation.value; });
+          // _controller.forward(from: 0.0);
         },
       ),
       body: SafeArea(
-        child: Center(
-          child: ValueListenableBuilder<double>(
-            valueListenable: _percentage,
-            builder: (context, percentage, child) {
-              // return DonutGraph(
-              //   percentage: percentage,
-              //   isSuccess: _percentage.value >= 100,
-              //   trackColor: Colors.grey[300],
-              //   completedColor: _percentage.value <= 100 ? Colors.green[300] : Colors.redAccent[400]
-              // );
-              return AnimatedCircularChart(
-                key: _chartKey,
-                percentageValues: true,
-                size: Size(350, 350), 
-                chartType: CircularChartType.Radial,
-                initialChartData: generateChartData(percentage)
-              );
-            },
-          )
-        )
-      ),
+        child: Column(
+          children: [
+            // DropdownButton(
+            //   items: runBloc.getWorkoutDays(),
+            //   onChanged: (day) async {
+            //     await runBloc.getRunDistance(month: day);
+            //     _percentageAnimation = Tween<double>(begin: 0, end: runBloc.runPercentage).animate(_controller)..addListener(() { _percentage.value = _percentageAnimation.value; });
+            //     _controller.forward(from: 0.0);
+            //   }
+            // ),
+            ValueListenableBuilder<double>(
+              valueListenable: _percentage,
+              builder: (context, percentage, child) {
+                return AnimatedCircularChart(
+                  key: _chartKey,
+                  percentageValues: true,
+                  size: Size(350, 350),
+                  chartType: CircularChartType.Radial,
+                  initialChartData: generateChartData(percentage),
+                  holeLabel: '$percentage%',
+                );
+              },
+            )
+          ],
+        ),
+      )
     );
   }
 }

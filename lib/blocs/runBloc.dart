@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:intl/intl.dart';
 
 import 'package:hashiru/models/workout.dart';
 
@@ -10,7 +11,7 @@ import 'package:hashiru/provoders/apiProvider.dart';
 class RunBloc with ChangeNotifier {
 
   RunBloc() {
-    getRunDistance();
+    _fetchWorkoutData();
     notifyListeners();
   }
 
@@ -24,9 +25,13 @@ class RunBloc with ChangeNotifier {
 
   final storage = FlutterSecureStorage();
 
-  Future<void> getRunDistance({String month}) async {
+  List<String> getWorkoutMonth() {
+    return _workouts.map((w) => w.month).toList();
+  }
+
+  Future<void> getRunDistance(String workoutMonth) async {
     await _fetchWorkoutData();
-    _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, month ?? DateTime.now().month.toString()));
+    _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth ?? DateTime.now().month.toString()));
 
     notifyListeners();
   }
@@ -37,7 +42,7 @@ class RunBloc with ChangeNotifier {
 
   List<Workout> _filterWorkoutList(List<Workout> workouts, String month) {
     final result = workouts.where((workout) => 
-      workout.month == month.padLeft(2, '0')
+      workout.month == month
     ).toList();
     return result;
   }
@@ -49,6 +54,6 @@ class RunBloc with ChangeNotifier {
       runDistance += workout.distance;
     }
     final result = (runDistance / goal) * 100;
-    return result;
+    return double.parse(result.toStringAsFixed(0));
   }
 }

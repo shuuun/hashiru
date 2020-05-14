@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:hashiru/models/workout.dart';
 
@@ -11,8 +10,7 @@ import 'package:hashiru/provoders/apiProvider.dart';
 class RunBloc with ChangeNotifier {
 
   RunBloc() {
-    _fetchWorkoutData();
-    notifyListeners();
+    getRunDistance();
   }
 
   double _runDistance;
@@ -21,22 +19,26 @@ class RunBloc with ChangeNotifier {
   double _runPercentage;
   double get runPercentage => _runPercentage;
 
+  // default value
+  double _goal = 100;
+  double get goal => _goal;
+
   List<Workout> _workouts;
 
-  final storage = FlutterSecureStorage();
-
-  List<String> getWorkoutMonth() {
-    return _workouts.map((w) => w.month).toList();
+  List<String> getWorkedoutMonths() {
+    // return _workouts.map((w) => w.month).toList();
+    return _workouts.map((w) => w.month).toSet().toList();
   }
 
-  Future<void> getRunDistance(String workoutMonth) async {
-    await _fetchWorkoutData();
-    _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth ?? DateTime.now().month.toString()));
-
+  Future<void> getRunDistance({String workoutMonth}) async {
+    await _loadWorkoutData();
+    await loadSavedGoal();
+    // _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth));
+    _runPercentage = (Random().nextInt(200).toDouble() / _goal) * 100;
     notifyListeners();
   }
 
-  Future<void> _fetchWorkoutData() async {
+  Future<void> _loadWorkoutData() async {
     _workouts = await ApiProvider.featchWorkoutData();
   }
 
@@ -49,11 +51,18 @@ class RunBloc with ChangeNotifier {
 
   double _calculateRunPercentage(List<Workout> workouts) {
     double runDistance = 0.0;
-    final goal = 50.0;
-    for (var workout in workouts) {
-      runDistance += workout.distance;
-    }
-    final result = (runDistance / goal) * 100;
+    workouts.map((w) => runDistance += w.distance);
+    final result = (runDistance / _goal) * 100;
     return double.parse(result.toStringAsFixed(0));
+  }
+
+  Future<void> loadSavedGoal() async {
+    final prefs = await SharedPreferences.getInstance();
+    _goal = prefs.getDouble('goal') ?? _goal;
+  }
+
+  Future<void> saveGoal(double goal) async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setDouble('goal', goal);
   }
 }

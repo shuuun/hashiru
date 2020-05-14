@@ -1,5 +1,4 @@
 import 'dart:ui';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 
@@ -8,6 +7,10 @@ import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
+import 'package:hashiru/widgets/components/goalSettingDialog.dart';
+import 'package:hashiru/widgets/components/likeDropDownButton.dart';
+import 'package:hashiru/widgets/components/selectWorkoutMonthPicker.dart';
+
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
@@ -15,22 +18,16 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
 
-  AnimationController _controller;
-  Animation<double> _percentageAnimation;
-  final _percentage = ValueNotifier<double>(160);
   final GlobalKey<AnimatedCircularChartState> _chartKey = GlobalKey<AnimatedCircularChartState>();
+  final workedoutMonth = ValueNotifier<String>('2020/05');
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: Duration(milliseconds: 1000));
-    // _percentageAnimation = Tween<double>(begin: 0, end: 100).animate(_controller)
-    //   ..addListener(() { setState(() {}); });
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
@@ -59,43 +56,57 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
   Widget build(BuildContext context) {
     final runBloc = Provider.of<RunBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: Text('HASHIRU'), actions: [IconButton(icon: Icon(Icons.exposure_zero), onPressed: () => _percentage.value = 0,)],),
+      appBar: AppBar(
+        title: Text('HASHIRU'),
+        actions: [
+          IconButton(icon: Icon(Icons.settings), onPressed: () { GoalSettingDialog().showGoalSettingDialog(context); },)
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.refresh),
         onPressed: () async {
-          await runBloc.getRunDistance('2020/04');
-          // _percentage.value = runBloc.runPercentage;
-          _percentage.value = Random().nextInt(200).toDouble();
+          await runBloc.getRunDistance(workoutMonth: '2020/04');
           setState(() {
-            _chartKey.currentState.updateData(generateChartData(_percentage.value));
+            _chartKey.currentState.updateData(generateChartData(runBloc.runPercentage));
           });
-          // _percentageAnimation = Tween<double>(begin: 0, end: runBloc.runPercentage).animate(_controller)..addListener(() { _percentage.value = _percentageAnimation.value; });
-          // _controller.forward(from: 0.0);
         },
       ),
       body: SafeArea(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // DropdownButton(
-            //   items: runBloc.getWorkoutDays(),
-            //   onChanged: (day) async {
-            //     await runBloc.getRunDistance(month: day);
-            //     _percentageAnimation = Tween<double>(begin: 0, end: runBloc.runPercentage).animate(_controller)..addListener(() { _percentage.value = _percentageAnimation.value; });
-            //     _controller.forward(from: 0.0);
-            //   }
-            // ),
-            ValueListenableBuilder<double>(
-              valueListenable: _percentage,
-              builder: (context, percentage, child) {
-                return AnimatedCircularChart(
-                  key: _chartKey,
-                  percentageValues: true,
-                  size: Size(350, 350),
-                  chartType: CircularChartType.Radial,
-                  initialChartData: generateChartData(percentage),
-                  holeLabel: '$percentage%',
-                );
+            SizedBox(height: 20,),
+            LikeDropDownButton(
+              content: workedoutMonth,
+              onPressed: () async {
+                print(runBloc.getWorkedoutMonths());
+                workedoutMonth.value = await SelectWorkoutMonthPicker().showPicker(context, runBloc.getWorkedoutMonths(), workedoutMonth.value);
+                await runBloc.getRunDistance(workoutMonth: workedoutMonth.value);
+                setState(() {
+                  _chartKey.currentState.updateData(generateChartData(runBloc.runPercentage));
+                });
               },
+            ),
+            SizedBox(height: 20,),
+            Expanded(
+              child: Consumer<RunBloc>(
+                builder: (context, bloc, child) {
+                  return bloc.runPercentage == null ?
+                    CircularProgressIndicator() : 
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(border: Border.all()),
+                      child: AnimatedCircularChart(
+                        key: _chartKey,
+                        percentageValues: true,
+                        size: Size(350, 350),
+                        chartType: CircularChartType.Radial,
+                        initialChartData: generateChartData(bloc.runPercentage),
+                        holeLabel: '${bloc.runPercentage.toStringAsFixed(0)}%',
+                      ),
+                  );
+                },
+              ),
             )
           ],
         ),

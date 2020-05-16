@@ -33,8 +33,7 @@ class RunBloc with ChangeNotifier {
   Future<void> getRunDistance({String workoutMonth}) async {
     await _loadWorkoutData();
     await loadSavedGoal();
-    // _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth));
-    _runPercentage = (Random().nextInt(200).toDouble() / _goal) * 100;
+    _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth));
     notifyListeners();
   }
 
@@ -50,9 +49,9 @@ class RunBloc with ChangeNotifier {
   }
 
   double _calculateRunPercentage(List<Workout> workouts) {
-    double runDistance = 0.0;
-    workouts.map((w) => runDistance += w.distance);
-    final result = (runDistance / _goal) * 100;
+    final runDistanceList = workouts.map((w) => w.distance).toList();
+    final addedRunDistance = runDistanceList.reduce((current, next) => current + next);
+    final result = (addedRunDistance / _goal) * 100;
     return double.parse(result.toStringAsFixed(0));
   }
 
@@ -61,8 +60,8 @@ class RunBloc with ChangeNotifier {
     _goal = prefs.getDouble('goal') ?? _goal;
   }
 
-  Future<void> saveGoal(double goal) async {
+  Future<void> saveGoal(String goal) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setDouble('goal', goal);
+    prefs.setDouble('goal', double.parse(goal));
   }
 }

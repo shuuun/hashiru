@@ -16,20 +16,10 @@ class MainPage extends StatefulWidget {
   _MainPageState createState() => _MainPageState();
 }
 
-class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
+class _MainPageState extends State<MainPage> {
 
   final GlobalKey<AnimatedCircularChartState> _chartKey = GlobalKey<AnimatedCircularChartState>();
   final workedoutMonth = ValueNotifier<String>('2020/05');
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   List<CircularStackEntry> generateChartData(double value) {
     List<CircularStackEntry> data = [
@@ -59,18 +49,24 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
       appBar: AppBar(
         title: Text('HASHIRU'),
         actions: [
-          IconButton(icon: Icon(Icons.settings), onPressed: () { GoalSettingDialog().showGoalSettingDialog(context); },)
+          IconButton(icon: Icon(Icons.settings), onPressed: () async { 
+            await GoalSettingDialog().showGoalSettingDialog(context);
+            await runBloc.getRunDistance(workoutMonth: workedoutMonth.value);
+            setState(() {
+              _chartKey.currentState.updateData(generateChartData(runBloc.runPercentage));
+            });
+          },)
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.refresh),
-        onPressed: () async {
-          await runBloc.getRunDistance(workoutMonth: '2020/04');
-          setState(() {
-            _chartKey.currentState.updateData(generateChartData(runBloc.runPercentage));
-          });
-        },
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.refresh),
+      //   onPressed: () async {
+      //     await runBloc.getRunDistance(workoutMonth: '2020/04');
+      //     setState(() {
+      //       _chartKey.currentState.updateData(generateChartData(runBloc.runPercentage));
+      //     });
+      //   },
+      // ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,7 +75,6 @@ class _MainPageState extends State<MainPage> with TickerProviderStateMixin {
             LikeDropDownButton(
               content: workedoutMonth,
               onPressed: () async {
-                print(runBloc.getWorkedoutMonths());
                 workedoutMonth.value = await SelectWorkoutMonthPicker().showPicker(context, runBloc.getWorkedoutMonths(), workedoutMonth.value);
                 await runBloc.getRunDistance(workoutMonth: workedoutMonth.value);
                 setState(() {

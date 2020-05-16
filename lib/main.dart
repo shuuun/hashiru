@@ -23,9 +23,6 @@ class MyApp extends StatelessWidget {
       title: 'hashiru',
       theme: ThemeData(
         primaryColor: Colors.redAccent,
-        inputDecorationTheme: InputDecorationTheme(
-          border: InputBorder.none
-        )
       ),
       // TextFieldコピペ時の問題やポップアップメニューの正しいローカライズのために
       // localizationsDelegates を指定することが必須。

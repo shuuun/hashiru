@@ -18,11 +18,10 @@ class GoalSettingDialog {
 
 class _GoalSettingDialog extends StatelessWidget {
 
-  final _controller = TextEditingController();
-
   @override
   Widget build(BuildContext context) {
     final runBloc = Provider.of<RunBloc>(context, listen: false);
+    final _controller = TextEditingController(text: runBloc.goal.toStringAsFixed(0));
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
       child: Container(

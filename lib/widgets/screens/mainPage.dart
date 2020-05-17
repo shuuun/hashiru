@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
@@ -49,7 +50,7 @@ class _MainPageState extends State<MainPage> {
       appBar: AppBar(
         title: Text('HASHIRU'),
         actions: [
-          IconButton(icon: Icon(Icons.settings), onPressed: () async { 
+          IconButton(icon: FaIcon(FontAwesomeIcons.running), onPressed: () async { 
             await GoalSettingDialog().showGoalSettingDialog(context);
             await runBloc.getRunDistance(workoutMonth: workedoutMonth.value);
             setState(() {

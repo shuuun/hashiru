@@ -8,7 +8,7 @@ import 'package:hashiru/provoders/apiProvider.dart';
 class RunBloc with ChangeNotifier {
 
   RunBloc() {
-    init();
+    getRunDistance();
   }
 
   double _runDistance;
@@ -23,20 +23,16 @@ class RunBloc with ChangeNotifier {
 
   List<Workout> _workouts;
 
-  Future<void> init() async {
-    await _loadWorkoutData();
-    await loadSavedGoal();
-  }
-
   List<String> getWorkedoutMonths() {
     // return _workouts.map((w) => w.month).toList();
     return _workouts.map((w) => w.month).toSet().toList();
   }
 
   Future<void> getRunDistance({String workoutMonth}) async {
+    final now = DateTime.now();
     await _loadWorkoutData();
     await loadSavedGoal();
-    _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth));
+    _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth ?? '${now.year}/${now.month.toString().padLeft(2, '0')}'));
     notifyListeners();
   }
 
@@ -53,8 +49,8 @@ class RunBloc with ChangeNotifier {
 
   double _calculateRunPercentage(List<Workout> workouts) {
     final runDistanceList = workouts.map((w) => w.distance).toList();
-    final addedRunDistance = runDistanceList.reduce((current, next) => current + next);
-    final result = (addedRunDistance / _goal) * 100;
+    _runDistance = runDistanceList.reduce((current, next) => current + next);
+    final result = (runDistance / _goal) * 100;
     return double.parse(result.toStringAsFixed(0));
   }
 

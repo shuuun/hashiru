@@ -19,7 +19,7 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
 
   final GlobalKey<AnimatedCircularChartState> _chartKey = GlobalKey<AnimatedCircularChartState>();
-  final workedoutMonth = ValueNotifier<String>('2020/05');
+  final workedoutMonth = ValueNotifier<String>('${DateTime.now().year.toString()}/${DateTime.now().month.toString().padLeft(2, '0')}');
 
   List<CircularStackEntry> generateChartData(double value) {
     List<CircularStackEntry> data = [
@@ -74,6 +74,31 @@ class _MainPageState extends State<MainPage> {
               },
             ),
             SizedBox(height: 20,),
+            Consumer<RunBloc>(
+              builder: (context, bloc, child) {
+                return Column(
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                        text: '走った距離 : ',
+                        style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
+                        children: [
+                          TextSpan(
+                            text: bloc.runDistance.toStringAsFixed(2),
+                            style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
+                          ),
+                          TextSpan(
+                            text: ' km'
+                          )
+                        ]
+                      ),
+                    ),
+                    SizedBox(height: 10,),
+                    Text('目標達成まであと${(bloc.goal - bloc.runDistance).toStringAsFixed(2)}km')
+                  ],
+                );
+              },
+            ),
             Expanded(
               child: Consumer<RunBloc>(
                 builder: (context, bloc, child) {
@@ -81,7 +106,6 @@ class _MainPageState extends State<MainPage> {
                     Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),),) : 
                     Container(
                       alignment: Alignment.center,
-                      decoration: BoxDecoration(border: Border.all()),
                       child: AnimatedCircularChart(
                         key: _chartKey,
                         percentageValues: true,
@@ -93,7 +117,7 @@ class _MainPageState extends State<MainPage> {
                   );
                 },
               ),
-            )
+            ),
           ],
         ),
       )

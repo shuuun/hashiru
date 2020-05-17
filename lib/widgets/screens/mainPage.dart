@@ -85,7 +85,7 @@ class _MainPageState extends State<MainPage> {
                         style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
                         children: [
                           TextSpan(
-                            text: bloc.runDistance.toStringAsFixed(2),
+                            text: bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(2) : '--',
                             style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
                           ),
                           TextSpan(
@@ -95,7 +95,6 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                     SizedBox(height: 10,),
-                    Text('目標達成まであと${(bloc.goal - bloc.runDistance).toStringAsFixed(2)}km')
                   ],
                 );
               },

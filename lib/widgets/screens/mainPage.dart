@@ -58,15 +58,6 @@ class _MainPageState extends State<MainPage> {
           },)
         ],
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.refresh),
-      //   onPressed: () async {
-      //     await runBloc.getRunDistance(workoutMonth: '2020/04');
-      //     setState(() {
-      //       _chartKey.currentState.updateData(generateChartData(runBloc.runPercentage));
-      //     });
-      //   },
-      // ),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -87,7 +78,7 @@ class _MainPageState extends State<MainPage> {
               child: Consumer<RunBloc>(
                 builder: (context, bloc, child) {
                   return bloc.runPercentage == null ?
-                    CircularProgressIndicator() : 
+                    Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),),) : 
                     Container(
                       alignment: Alignment.center,
                       decoration: BoxDecoration(border: Border.all()),

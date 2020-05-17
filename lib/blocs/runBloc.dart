@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -10,7 +8,7 @@ import 'package:hashiru/provoders/apiProvider.dart';
 class RunBloc with ChangeNotifier {
 
   RunBloc() {
-    getRunDistance();
+    init();
   }
 
   double _runDistance;
@@ -24,6 +22,11 @@ class RunBloc with ChangeNotifier {
   double get goal => _goal;
 
   List<Workout> _workouts;
+
+  Future<void> init() async {
+    await _loadWorkoutData();
+    await loadSavedGoal();
+  }
 
   List<String> getWorkedoutMonths() {
     // return _workouts.map((w) => w.month).toList();

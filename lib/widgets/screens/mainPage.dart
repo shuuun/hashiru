@@ -11,6 +11,7 @@ import 'package:hashiru/blocs/runBloc.dart';
 import 'package:hashiru/widgets/components/goalSettingDialog.dart';
 import 'package:hashiru/widgets/components/likeDropDownButton.dart';
 import 'package:hashiru/widgets/components/selectWorkoutMonthPicker.dart';
+import 'package:hashiru/widgets/components/notAuthorizedView.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -63,6 +64,7 @@ class _MainPageState extends State<MainPage> {
         child: Selector<RunBloc, bool>(
           selector: (context, state) => state.isHKAuthorized,
           builder: (context, isHKAuthorized, child) {
+            if (isHKAuthorized == null) return Container();
             return isHKAuthorized ? 
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,7 +125,7 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ),
                 ],
-              ) : Container();
+              ) : NotAuthorizedPage();
           },
         )
       )

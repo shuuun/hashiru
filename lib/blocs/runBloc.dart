@@ -23,7 +23,7 @@ class RunBloc with ChangeNotifier {
 
   List<Workout> _workouts;
 
-  bool isHKAuthorized = false;
+  bool isHKAuthorized;
 
   List<String> getWorkedoutMonths() {
     // return _workouts.map((w) => w.month).toList();
@@ -37,8 +37,8 @@ class RunBloc with ChangeNotifier {
       await _loadWorkoutData();
       await loadSavedGoal();
       _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth ?? '${now.year}/${now.month.toString().padLeft(2, '0')}'));
-      notifyListeners();
     }
+    notifyListeners();
   }
 
   Future<void> _checkHKAuthoraized() async {
@@ -57,6 +57,7 @@ class RunBloc with ChangeNotifier {
   }
 
   double _calculateRunPercentage(List<Workout> workouts) {
+    if (workouts.isEmpty) return 0;
     final runDistanceList = workouts.map((w) => w.distance).toList();
     _runDistance = runDistanceList.reduce((current, next) => current + next);
     final result = (runDistance / _goal) * 100;

@@ -8,6 +8,10 @@ class ApiProvider {
 
   static final _channel = MethodChannel('hashiru/workout');
 
+  static Future<bool> isHKAuthorized() async {
+    return await _channel.invokeMethod('isHKAuthorized');
+  }
+
   static Future<List<Workout>> featchWorkoutData() async {
     final workouts = await _channel.invokeMethod('getWorkoutData');
     List<Workout> result = [];

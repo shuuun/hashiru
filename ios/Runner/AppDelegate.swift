@@ -23,7 +23,9 @@ import HealthKit
   }
   
   func handleMethodCall(call: FlutterMethodCall, result: @escaping FlutterResult) -> Void {
-    if call.method == "getWorkoutData" {
+    if call.method == "isHKAuthorized" {
+      requestHKAuthorization(result: result)
+    } else if call.method == "getWorkoutData" {
       readWorkoutData(result: result)
     } else {
       result(FlutterMethodNotImplemented)
@@ -35,6 +37,16 @@ import HealthKit
     HKWorkoutType.workoutType(),
     HKObjectType.quantityType(forIdentifier: HKQuantityTypeIdentifier.distanceWalkingRunning)!
   ]
+  
+  private func requestHKAuthorization(result: @escaping FlutterResult) -> Void {
+    return self.healthKitStore.requestAuthorization(toShare: nil, read: readDataTypes, completion: {(success, error) -> Void in
+      if success {
+        result(success)
+      } else {
+        result(false)
+      }
+    })
+  }
   
   private func readWorkoutData(result: @escaping FlutterResult) {
     let predicate = HKQuery.predicateForWorkouts(with: HKWorkoutActivityType.running)
@@ -56,12 +68,7 @@ import HealthKit
       result(dict as Array)
     }
     
-    self.healthKitStore.requestAuthorization(toShare: nil, read: readDataTypes) {
-      (success, error) -> Void in
-      if success == false { return } else {
-        self.healthKitStore.execute(query)
-      }
-    }
+    self.healthKitStore.execute(query)
   }
   
   private func returnMonth(date: Date) -> String {

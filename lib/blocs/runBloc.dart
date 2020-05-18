@@ -23,6 +23,8 @@ class RunBloc with ChangeNotifier {
 
   List<Workout> _workouts;
 
+  bool isHKAuthorized = false;
+
   List<String> getWorkedoutMonths() {
     // return _workouts.map((w) => w.month).toList();
     return _workouts.map((w) => w.month).toSet().toList();
@@ -30,10 +32,17 @@ class RunBloc with ChangeNotifier {
 
   Future<void> getRunDistance({String workoutMonth}) async {
     final now = DateTime.now();
-    await _loadWorkoutData();
-    await loadSavedGoal();
-    _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth ?? '${now.year}/${now.month.toString().padLeft(2, '0')}'));
-    notifyListeners();
+    await _checkHKAuthoraized();
+    if (isHKAuthorized) {
+      await _loadWorkoutData();
+      await loadSavedGoal();
+      _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth ?? '${now.year}/${now.month.toString().padLeft(2, '0')}'));
+      notifyListeners();
+    }
+  }
+
+  Future<void> _checkHKAuthoraized() async {
+    isHKAuthorized = await ApiProvider.isHKAuthorized();
   }
 
   Future<void> _loadWorkoutData() async {

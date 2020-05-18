@@ -8,7 +8,7 @@ import 'package:hashiru/provoders/apiProvider.dart';
 class RunBloc with ChangeNotifier {
 
   RunBloc() {
-    getRunDistance();
+    refreshRunInfo();
   }
 
   double _runDistance;
@@ -30,13 +30,13 @@ class RunBloc with ChangeNotifier {
     return _workouts.map((w) => w.month).toSet().toList();
   }
 
-  Future<void> getRunDistance({String workoutMonth}) async {
+  Future<void> refreshRunInfo({String workoutMonth}) async {
     final now = DateTime.now();
     await _checkHKAuthoraized();
     if (isHKAuthorized) {
       await _loadWorkoutData();
       if (_workouts.isEmpty) {
-        isHKAuthorized = false;
+        clear();
         notifyListeners();
         return;
       }
@@ -77,5 +77,13 @@ class RunBloc with ChangeNotifier {
   Future<void> saveGoal(String goal) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setDouble('goal', double.parse(goal));
+  }
+
+  void clear() {
+    _runDistance = null;
+    _runPercentage = null;
+    _workouts = null;
+    isHKAuthorized = false;
+    notifyListeners();
   }
 }

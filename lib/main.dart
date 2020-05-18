@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'hashiru',
       theme: ThemeData(
+        accentColor: Colors.redAccent,
         primaryColor: Colors.redAccent,
       ),
       // TextFieldコピペ時の問題やポップアップメニューの正しいローカライズのために

@@ -35,6 +35,11 @@ class RunBloc with ChangeNotifier {
     await _checkHKAuthoraized();
     if (isHKAuthorized) {
       await _loadWorkoutData();
+      if (_workouts.isEmpty) {
+        isHKAuthorized = false;
+        notifyListeners();
+        return;
+      }
       await loadSavedGoal();
       _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth ?? '${now.year}/${now.month.toString().padLeft(2, '0')}'));
     }

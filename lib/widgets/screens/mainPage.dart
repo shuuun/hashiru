@@ -60,7 +60,7 @@ class MainPage extends StatelessWidget {
         actions: [
           Consumer<RunBloc>(
             builder: (context, bloc, child) {
-              if (bloc.isHKAuthorized == null) return Container();
+              if (bloc.isHKAuthorized == null || bloc.isHKAuthorized == true && runBloc.existsWorkout == false) return Container();
               return bloc.isHKAuthorized ? 
                 IconButton(icon: FaIcon(FontAwesomeIcons.running), onPressed: () async { 
                   await GoalSettingDialog().showGoalSettingDialog(context);

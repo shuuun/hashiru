@@ -31,6 +31,8 @@ class NotExistsWorkoutView extends StatelessWidget {
               ),
               SizedBox(height: 30,),
               Text('走った記録がありません😭', style: TextStyle(fontSize: 24),),
+              SizedBox(height: 20,),
+              Text('AppStoreからワークアウトAppをインストールして'),
               Text('HASHIRE!', style: TextStyle(color: Colors.redAccent, fontSize: 30),),
               SizedBox(height: 20),
               RoundedButton(text: 'データを再取得する', onPressed: onRefresh),

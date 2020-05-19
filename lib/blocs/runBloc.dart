@@ -23,7 +23,10 @@ class RunBloc with ChangeNotifier {
 
   List<Workout> _workouts;
 
+  /// アクセスが許可されたかどうか
   bool isHKAuthorized;
+
+  bool existsWorkout = false;
 
   List<String> getWorkedoutMonths() {
     // return _workouts.map((w) => w.month).toList();
@@ -37,7 +40,6 @@ class RunBloc with ChangeNotifier {
       await _loadWorkoutData();
       if (_workouts.isEmpty) {
         clear();
-        notifyListeners();
         return;
       }
       await loadSavedGoal();
@@ -52,6 +54,8 @@ class RunBloc with ChangeNotifier {
 
   Future<void> _loadWorkoutData() async {
     _workouts = await ApiProvider.featchWorkoutData();
+    existsWorkout = _workouts.isNotEmpty;
+    notifyListeners();
   }
 
   List<Workout> _filterWorkoutList(List<Workout> workouts, String month) {

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:hashiru/widgets/components/roundedButtom.dart';
+
 class NotAuthorizedPage extends StatelessWidget {
 
   final Future<void> Function() onRefresh;
@@ -14,7 +16,7 @@ class NotAuthorizedPage extends StatelessWidget {
       child: SingleChildScrollView(
         physics: AlwaysScrollableScrollPhysics(),
         child: Container(
-          height: MediaQuery.of(context).size.height,
+          height: MediaQuery.of(context).size.height * 0.8,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -76,6 +78,8 @@ class NotAuthorizedPage extends StatelessWidget {
                   ]
                 ),
               ),
+              SizedBox(height: 30,),
+              RoundedButton(text: 'データを再取得する', onPressed: onRefresh),
               Expanded(child: Container(),)
             ],
           ),

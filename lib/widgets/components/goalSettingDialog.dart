@@ -5,6 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
+import 'package:hashiru/widgets/components/roundedButtom.dart';
+
 class GoalSettingDialog {
   Future<void> showGoalSettingDialog(BuildContext context) async {
     await showDialog(
@@ -54,19 +56,12 @@ class _GoalSettingDialog extends StatelessWidget {
                 ),
               ),
             ),
-            RawMaterialButton(
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-              fillColor: Colors.redAccent,
-              onPressed: () {
-                runBloc.saveGoal(_controller.text);
+            RoundedButton(
+              text: '設定する',
+              onPressed: () async {
+                await runBloc.saveGoal(_controller.text);
                 Navigator.pop(context);
               },
-              child: Container(
-                width: 200,
-                height: 44,
-                alignment: Alignment.center,
-                child: Text('設定する', style: TextStyle(color: Colors.white, fontSize: 18),),
-              )
             ),
             SizedBox(height: 20,)
           ],

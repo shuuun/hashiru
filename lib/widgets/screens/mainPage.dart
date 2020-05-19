@@ -12,10 +12,10 @@ import 'package:hashiru/widgets/components/goalSettingDialog.dart';
 import 'package:hashiru/widgets/components/likeDropDownButton.dart';
 import 'package:hashiru/widgets/components/selectWorkoutMonthPicker.dart';
 import 'package:hashiru/widgets/components/notAuthorizedView.dart';
+import 'package:hashiru/widgets/components/notExistsWorkoutView.dart';
 
 class MainPage extends StatelessWidget {
   
-
   final GlobalKey<AnimatedCircularChartState> _chartKey = GlobalKey<AnimatedCircularChartState>();
   final workedoutMonth = ValueNotifier<String>('${DateTime.now().year.toString()}/${DateTime.now().month.toString().padLeft(2, '0')}');
 
@@ -74,73 +74,74 @@ class MainPage extends StatelessWidget {
         child: Selector<RunBloc, bool>(
           selector: (context, state) => state.isHKAuthorized,
           builder: (context, isHKAuthorized, child) {
-            if (isHKAuthorized == null) return Container();
-              return isHKAuthorized ? 
-                RefreshIndicator(
-                  onRefresh: () async => await refreshValue(),
-                  child: SingleChildScrollView(
-                    physics: AlwaysScrollableScrollPhysics(),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height,
-                      child: Column(
-                        children: [
-                          SizedBox(height: 20,),
-                          LikeDropDownButton(
-                            content: workedoutMonth,
-                            onPressed: () async {
-                              workedoutMonth.value = await SelectWorkoutMonthPicker().showPicker(context, runBloc.getWorkedoutMonths(), workedoutMonth.value);
-                              await refreshValue();
-                            },
-                          ),
-                          SizedBox(height: 20,),
-                          Consumer<RunBloc>(
-                            builder: (context, bloc, child) {
-                              return Column(
-                                children: [
-                                  RichText(
-                                    text: TextSpan(
-                                      text: '走った距離 : ',
-                                      style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
-                                      children: [
-                                        TextSpan(
-                                          text: bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(2) : '--',
-                                          style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
-                                        ),
-                                        TextSpan(
-                                          text: ' km'
-                                        )
-                                      ]
-                                    ),
+            if (isHKAuthorized == null) return Center(child: CircularProgressIndicator(),);
+            if (isHKAuthorized == true && runBloc.existsWorkout == false) return NotExistsWorkoutView(onRefresh: refreshValue,);
+            return isHKAuthorized ? 
+              RefreshIndicator(
+                onRefresh: () async => await refreshValue(),
+                child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height * 0.8,
+                    child: Column(
+                      children: [
+                        SizedBox(height: 20,),
+                        LikeDropDownButton(
+                          content: workedoutMonth,
+                          onPressed: () async {
+                            workedoutMonth.value = await SelectWorkoutMonthPicker().showPicker(context, runBloc.getWorkedoutMonths(), workedoutMonth.value);
+                            await refreshValue();
+                          },
+                        ),
+                        SizedBox(height: 20,),
+                        Consumer<RunBloc>(
+                          builder: (context, bloc, child) {
+                            return Column(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
+                                    text: '走った距離 : ',
+                                    style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
+                                    children: [
+                                      TextSpan(
+                                        text: bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(2) : '--',
+                                        style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
+                                      ),
+                                      TextSpan(
+                                        text: ' km'
+                                      )
+                                    ]
                                   ),
-                                  SizedBox(height: 10,),
-                                ],
-                              );
-                            },
-                          ),
-                          SizedBox(height: 30,),
-                          Consumer<RunBloc>(
-                            builder: (context, bloc, child) {
-                              return bloc.runPercentage == null ?
-                                Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),),) : 
-                                Container(
-                                  alignment: Alignment.center,
-                                  child: AnimatedCircularChart(
-                                    key: _chartKey,
-                                    percentageValues: true,
-                                    size: Size(350, 350),
-                                    chartType: CircularChartType.Radial,
-                                    initialChartData: generateChartData(bloc.runPercentage),
-                                    holeLabel: '${bloc.runPercentage.toStringAsFixed(0)}%',
-                                  ),
-                              );
-                            },
-                          ),
-                          Expanded(child: Container(),)
-                        ],
-                    ),
-                  )
+                                ),
+                                SizedBox(height: 10,),
+                              ],
+                            );
+                          },
+                        ),
+                        SizedBox(height: 30,),
+                        Consumer<RunBloc>(
+                          builder: (context, bloc, child) {
+                            return bloc.runPercentage == null ?
+                              Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),),) : 
+                              Container(
+                                alignment: Alignment.center,
+                                child: AnimatedCircularChart(
+                                  key: _chartKey,
+                                  percentageValues: true,
+                                  size: Size(350, 350),
+                                  chartType: CircularChartType.Radial,
+                                  initialChartData: generateChartData(bloc.runPercentage),
+                                  holeLabel: '${bloc.runPercentage.toStringAsFixed(0)}%',
+                                ),
+                            );
+                          },
+                        ),
+                        Expanded(child: Container(),)
+                      ],
+                  ),
                 )
-              ) : NotAuthorizedPage(onRefresh: refreshValue,);
+              )
+            ) : NotAuthorizedPage(onRefresh: refreshValue,);
           },
         )
       )

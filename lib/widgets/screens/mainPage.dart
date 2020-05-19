@@ -100,11 +100,35 @@ class MainPage extends StatelessWidget {
                               children: [
                                 RichText(
                                   text: TextSpan(
+                                    text: 'あなたが走る距離 : ',
+                                    style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
+                                    children: [
+                                      TextSpan(
+                                        text: bloc.runDistance != null ? bloc.goal.toStringAsFixed(1) : '--',
+                                        style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
+                                      ),
+                                      TextSpan(
+                                        text: ' km'
+                                      )
+                                    ]
+                                  ),
+                                ),
+                                SizedBox(height: 10,),
+                              ],
+                            );
+                          },
+                        ),
+                        Consumer<RunBloc>(
+                          builder: (context, bloc, child) {
+                            return Column(
+                              children: [
+                                RichText(
+                                  text: TextSpan(
                                     text: '走った距離 : ',
                                     style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
                                     children: [
                                       TextSpan(
-                                        text: bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(2) : '--',
+                                        text: bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(1) : '--',
                                         style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
                                       ),
                                       TextSpan(

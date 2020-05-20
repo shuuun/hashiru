@@ -21,23 +21,59 @@ class MainPage extends StatelessWidget {
 
   List<CircularStackEntry> generateChartData(double value) {
     if (value == null) return [];
-    List<CircularStackEntry> data = [
-      CircularStackEntry(
-        [
-          CircularSegmentEntry(value, Colors.green[300], rankKey: 'completed line')
-        ]
-      )
-    ];
-    
-    if (value > 100) {
+
+    List<CircularStackEntry> data = [];
+
+    double counter = value;
+
+    while(counter > 100) {
       data.add(
         CircularStackEntry(
           [
-            CircularSegmentEntry(value - 100, Colors.green[300], rankKey: 'completed line')
+            CircularSegmentEntry(counter, Colors.green[300], rankKey: 'completed line')
           ]
         )
       );
+      counter -= 100;
     }
+
+    data.add(
+      CircularStackEntry(
+        [
+          CircularSegmentEntry(counter, Colors.green[300], rankKey: 'completed line')
+        ]
+      )
+    );
+
+    // List<CircularStackEntry> data = [
+    //   CircularStackEntry(
+    //     [
+    //       CircularSegmentEntry(value, Colors.green[300], rankKey: 'completed line')
+    //     ]
+    //   )
+    // ];
+
+    // for (var v = value; v > 100; v - 100) {
+    //   data.add(
+    //     CircularStackEntry(
+    //       [
+    //         CircularSegmentEntry(v, Colors.green[300], rankKey: 'completed line')
+    //       ]
+    //     )
+    //   );
+    // }
+
+
+
+    // if (value > 100) {
+    //   data.add(
+    //     CircularStackEntry(
+    //       [
+    //         CircularSegmentEntry(value - 100, Colors.green[300], rankKey: 'completed line')
+    //       ]
+    //     )
+    //   );
+    // }
     return data;
   }
   
@@ -100,7 +136,7 @@ class MainPage extends StatelessWidget {
                               children: [
                                 RichText(
                                   text: TextSpan(
-                                    text: 'あなたが走る距離 : ',
+                                    text: '1ヶ月の目標 : ',
                                     style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
                                     children: [
                                       TextSpan(
@@ -155,9 +191,14 @@ class MainPage extends StatelessWidget {
                                   size: Size(350, 350),
                                   chartType: CircularChartType.Radial,
                                   initialChartData: generateChartData(bloc.runPercentage),
-                                  holeLabel: '${bloc.runPercentage.toStringAsFixed(0)}%',
                                 ),
                             );
+                          },
+                        ),
+                        Selector<RunBloc, double>(
+                          selector: (context, per) => per.runPercentage,
+                          builder: (context, per, child) {
+                            return Text(per.toString());
                           },
                         ),
                         Expanded(child: Container(),)

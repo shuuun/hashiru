@@ -66,7 +66,10 @@ class RunBloc with ChangeNotifier {
   }
 
   double _calculateRunPercentage(List<Workout> workouts) {
-    if (workouts.isEmpty) return 0;
+    if (workouts.isEmpty) {
+      _runDistance = 0;
+      return 0;
+    }
     final runDistanceList = workouts.map((w) => w.distance).toList();
     _runDistance = runDistanceList.reduce((current, next) => current + next);
     final result = (runDistance / _goal) * 100;

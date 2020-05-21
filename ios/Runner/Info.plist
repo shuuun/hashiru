@@ -47,5 +47,8 @@
 	<string>走った距離を集計するためにウォーキング＋ランニングの距離の許可が必要です</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>UIStatusBarHidden</key>
+	<true/>
+
 </dict>
 </plist>

@@ -45,35 +45,6 @@ class MainPage extends StatelessWidget {
       )
     );
 
-    // List<CircularStackEntry> data = [
-    //   CircularStackEntry(
-    //     [
-    //       CircularSegmentEntry(value, Colors.green[300], rankKey: 'completed line')
-    //     ]
-    //   )
-    // ];
-
-    // for (var v = value; v > 100; v - 100) {
-    //   data.add(
-    //     CircularStackEntry(
-    //       [
-    //         CircularSegmentEntry(v, Colors.green[300], rankKey: 'completed line')
-    //       ]
-    //     )
-    //   );
-    // }
-
-
-
-    // if (value > 100) {
-    //   data.add(
-    //     CircularStackEntry(
-    //       [
-    //         CircularSegmentEntry(value - 100, Colors.green[300], rankKey: 'completed line')
-    //       ]
-    //     )
-    //   );
-    // }
     return data;
   }
   

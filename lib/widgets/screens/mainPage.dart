@@ -149,6 +149,24 @@ class MainPage extends StatelessWidget {
                             );
                           },
                         ),
+                        Selector<RunBloc, double>(
+                          selector: (context, per) => per.runPercentage,
+                          builder: (context, per, child) {
+                            return RichText(
+                              text: TextSpan(
+                                text: '達成率 : ',
+                                style: DefaultTextStyle.of(context).style.copyWith(fontSize :20),
+                                children: [
+                                  TextSpan(
+                                    text: per != null ? per.toStringAsFixed(0) : '--',
+                                    style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
+                                  ),
+                                  TextSpan(text: ' %')
+                                ]
+                              ),
+                            );
+                          },
+                        ),
                         SizedBox(height: 30,),
                         Consumer<RunBloc>(
                           builder: (context, bloc, child) {
@@ -164,12 +182,6 @@ class MainPage extends StatelessWidget {
                                   initialChartData: generateChartData(bloc.runPercentage),
                                 ),
                             );
-                          },
-                        ),
-                        Selector<RunBloc, double>(
-                          selector: (context, per) => per.runPercentage,
-                          builder: (context, per, child) {
-                            return Text(per.toString());
                           },
                         ),
                         Expanded(child: Container(),)

@@ -4,6 +4,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'package:hashiru/widgets/screens/mainPage.dart';
+import 'package:hashiru/widgets/screens/appLoadingPage.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: const [
         Locale('ja')
       ],
-      home: MainPage(),
+      home: AppLoadingPage(),
     );
   }
 }

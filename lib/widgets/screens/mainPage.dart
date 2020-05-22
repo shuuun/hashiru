@@ -149,6 +149,23 @@ class MainPage extends StatelessWidget {
                             );
                           },
                         ),
+                        SizedBox(height: 30,),
+                        Consumer<RunBloc>(
+                          builder: (context, bloc, child) {
+                            return bloc.runPercentage == null ?
+                              Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),),) : 
+                              Container(
+                                alignment: Alignment.center,
+                                child: AnimatedCircularChart(
+                                  key: _chartKey,
+                                  percentageValues: true,
+                                  size: Size(350, 350),
+                                  chartType: CircularChartType.Radial,
+                                  initialChartData: generateChartData(bloc.runPercentage),
+                                ),
+                            );
+                          },
+                        ),
                         Selector<RunBloc, double>(
                           selector: (context, per) => per.runPercentage,
                           builder: (context, per, child) {
@@ -164,23 +181,6 @@ class MainPage extends StatelessWidget {
                                   TextSpan(text: ' %')
                                 ]
                               ),
-                            );
-                          },
-                        ),
-                        SizedBox(height: 30,),
-                        Consumer<RunBloc>(
-                          builder: (context, bloc, child) {
-                            return bloc.runPercentage == null ?
-                              Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),),) : 
-                              Container(
-                                alignment: Alignment.center,
-                                child: AnimatedCircularChart(
-                                  key: _chartKey,
-                                  percentageValues: true,
-                                  size: Size(350, 350),
-                                  chartType: CircularChartType.Radial,
-                                  initialChartData: generateChartData(bloc.runPercentage),
-                                ),
                             );
                           },
                         ),

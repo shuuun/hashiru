@@ -162,6 +162,8 @@ class MainPage extends StatelessWidget {
                                   size: Size(350, 350),
                                   chartType: CircularChartType.Radial,
                                   initialChartData: generateChartData(bloc.runPercentage),
+                                  holeLabel: 'HASHITTA',
+                                  labelStyle: TextStyle(color: Colors.redAccent, fontSize: 20, fontWeight: FontWeight.bold),
                                 ),
                             );
                           },

@@ -13,6 +13,7 @@ import 'package:hashiru/widgets/components/likeDropDownButton.dart';
 import 'package:hashiru/widgets/components/selectWorkoutMonthPicker.dart';
 import 'package:hashiru/widgets/components/notAuthorizedView.dart';
 import 'package:hashiru/widgets/components/notExistsWorkoutView.dart';
+import 'package:hashiru/widgets/components/drawerMenu.dart';
 
 class MainPage extends StatelessWidget {
   
@@ -64,18 +65,12 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('HASHIRU'),
-        actions: [
-          Consumer<RunBloc>(
-            builder: (context, bloc, child) {
-              if (bloc.isHKAuthorized == null || bloc.isHKAuthorized == true && runBloc.existsWorkout == false) return Container();
-              return bloc.isHKAuthorized ? 
-                IconButton(icon: FaIcon(FontAwesomeIcons.running), onPressed: () async { 
-                  await GoalSettingDialog().showGoalSettingDialog(context);
-                  await refreshValue();
-                },) : Container();
-            },
-          )
-        ],
+      ),
+      drawer: Consumer<RunBloc>(
+        builder: (context, bloc, child) {
+          if (bloc.isHKAuthorized == null || bloc.isHKAuthorized == true && runBloc.existsWorkout == false) return Container();
+          return bloc.isHKAuthorized ? DrawerMenu(refreshValue) : Container();
+        },
       ),
       body: SafeArea(
         child: Selector<RunBloc, bool>(
@@ -174,7 +169,7 @@ class MainPage extends StatelessWidget {
                             return RichText(
                               text: TextSpan(
                                 text: '達成率 : ',
-                                style: DefaultTextStyle.of(context).style.copyWith(fontSize :20),
+                                style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
                                 children: [
                                   TextSpan(
                                     text: per != null ? per.toStringAsFixed(0) : '--',

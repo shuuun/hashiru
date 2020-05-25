@@ -24,6 +24,13 @@ class _GoalSettingPageState extends State<GoalSettingPage> {
     _controller.addListener(() { checkTextField(); });
   }
 
+  @override
+  void dispose() {
+    _controller.dispose();
+    saveButtonEnable.dispose();
+    super.dispose();
+  }
+
   void checkTextField() {
     final _text = num.tryParse(_controller.text);
     saveButtonEnable.value = _text != 0 && _text != null;

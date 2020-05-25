@@ -5,15 +5,17 @@ import 'package:flutter/material.dart';
 class RoundedButton extends StatelessWidget {
 
   final String text;
+  final bool enabled;
   final FutureOr Function() onPressed;
-  RoundedButton({@required this.text, @required this.onPressed});
+  RoundedButton({@required this.text, this.enabled = true, @required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
+    return FlatButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
-      fillColor: Colors.redAccent,
-      onPressed: onPressed,
+      color: Colors.redAccent,
+      disabledColor: Colors.grey[400],
+      onPressed: enabled ? onPressed : null,
       child: Container(
         width: 200,
         height: 44,

@@ -8,12 +8,30 @@ import 'package:hashiru/widgets/screens/mainPage.dart';
 
 import 'package:hashiru/widgets/components/roundedButtom.dart';
 
-class GoalSettingPage extends StatelessWidget {
+class GoalSettingPage extends StatefulWidget {
+  @override
+  _GoalSettingPageState createState() => _GoalSettingPageState();
+}
+
+class _GoalSettingPageState extends State<GoalSettingPage> {
+  
+  final _controller = TextEditingController(text: '');
+  final saveButtonEnable = ValueNotifier<bool>(false);
+
+  @override
+  void initState() {
+    super.initState();
+    _controller.addListener(() { checkTextField(); });
+  }
+
+  void checkTextField() {
+    final _text = num.tryParse(_controller.text);
+    saveButtonEnable.value = _text != 0 && _text != null;
+  }
   
   @override
   Widget build(BuildContext context) {
     final runBloc = Provider.of<RunBloc>(context, listen: false);
-    final _controller = TextEditingController(text: runBloc.goal.toStringAsFixed(0));
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.transparent, elevation: 0, ),
       body: SafeArea(
@@ -42,12 +60,15 @@ class GoalSettingPage extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.center,
                 children: [
-                  TextField(
+                  TextFormField(
                     controller: _controller,
                     cursorColor: Colors.redAccent,
                     textAlign: TextAlign.center,
+                    autofocus: true,
                     keyboardType: TextInputType.number,
                     style: TextStyle(fontSize: 24),
+                    toolbarOptions: ToolbarOptions(),
+                    autovalidate: true,
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -57,14 +78,20 @@ class GoalSettingPage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 40,),
-            RoundedButton(
-              text: '設定する',
-              onPressed: () async {
-                await runBloc.saveGoal(_controller.text);
-                await runBloc.refreshRunInfo();
-                Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => MainPage()),
-                  (r) => false
+            ValueListenableBuilder<bool>(
+              valueListenable: saveButtonEnable,
+              builder: (context, enable, child) {
+                return RoundedButton(
+                  text: '設定する',
+                  enabled: enable,
+                  onPressed: () async {
+                    await runBloc.saveGoal(_controller.text);
+                    await runBloc.refreshRunInfo();
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => MainPage()),
+                      (r) => false
+                    );
+                  },
                 );
               },
             ),

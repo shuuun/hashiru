@@ -27,6 +27,12 @@ class DrawerMenu extends StatelessWidget {
             await GoalSettingDialog().showGoalSettingDialog(context);
             refreshValue();
           }),
+          _listTile(title: 'ライセンス情報', onPressed: () {
+            showLicensePage(
+              context: context,
+              applicationName: 'HASHIRU',
+            );
+          })
         ],
       ),
     );

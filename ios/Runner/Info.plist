@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>ITSAppUsesNonExemptEncryption</key>
-	<true/>
+	<false/>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -51,8 +51,6 @@
 	<string>走った距離にアクセスするために2つの項目の許可が必要です</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>LSApplicationCategoryType</key>
-	<string></string>
 	<key>UIStatusBarHidden</key>
 	<true/>
 </dict>

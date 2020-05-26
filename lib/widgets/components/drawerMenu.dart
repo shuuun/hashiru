@@ -37,7 +37,7 @@ class DrawerMenu extends StatelessWidget {
       height: 50,
       padding: EdgeInsets.only(left: 10, right: 10),
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: Colors.black54))
+        border: Border(bottom: BorderSide(color: Colors.grey))
       ),
       child: RawMaterialButton(
         materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -46,7 +46,7 @@ class DrawerMenu extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(title),
-            Icon(Icons.arrow_forward_ios, size: 18,)
+            Icon(Icons.arrow_forward_ios, size: 14,)
           ],
         ),
       )

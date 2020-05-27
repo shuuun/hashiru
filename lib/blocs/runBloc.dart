@@ -29,7 +29,7 @@ class RunBloc with ChangeNotifier {
 
   List<String> getWorkedoutMonths() {
     // return _workouts.map((w) => w.month).toList();
-    return _workouts.map((w) => w.month).toSet().toList();
+    return _workouts.map((w) => w.workoutYYYYMM).toSet().toList();
   }
 
   Future<void> refreshRunInfo({String workoutMonth}) async {
@@ -59,7 +59,7 @@ class RunBloc with ChangeNotifier {
 
   List<Workout> _filterWorkoutList(List<Workout> workouts, String month) {
     final result = workouts.where((workout) => 
-      workout.month == month
+      workout.workoutYYYYMM == month
     ).toList();
     return result;
   }

@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 
 import 'package:hashiru/models/workout.dart';
 
@@ -18,7 +19,8 @@ class ApiProvider {
     for (var workout in workouts) {
       final distance = double.parse(workout['total_distance']);
       final _workout = Workout(
-        month: workout['workout_month'],
+        workoutDay: workout['workout_day'],
+        workoutYYYYMM: workout['workout_yyyymm'],
         distance: distance,
         duration: workout['duration']
       );

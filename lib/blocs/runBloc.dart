@@ -21,6 +21,7 @@ class RunBloc with ChangeNotifier {
   double get goal => _goal;
 
   List<Workout> _workouts;
+  List<Workout> get workouts => _workouts;
 
   /// アクセスが許可されたかどうか
   bool isHKAuthorized;

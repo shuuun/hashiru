@@ -64,9 +64,9 @@ import HealthKit
         if let distance = workout.totalDistance {
           result.updateValue(String(distance.doubleValue(for: HKUnit.meter()) / 1000), forKey: "total_distance")
         }
-        result.updateValue(self.returnDateTime(date: workout.startDate, format: "YYYY/MM/DD"), forKey: "workout_day")
-        result.updateValue(self.returnDateTime(date: workout.startDate, format: "YYYY/MM"), forKey: "workout_yyyymm")
-        result.updateValue(String(workout.duration.stringFromTimeInterval()), forKey: "duration")
+        result.updateValue(self.returnDateTime(date: workout.startDate, format: "yyyy/MM/dd EEEE"), forKey: "workout_day")
+        result.updateValue(self.returnDateTime(date: workout.startDate, format: "yyyy/MM"), forKey: "workout_yyyymm")
+        result.updateValue(workout.duration.stringFromTimeInterval(), forKey: "duration")
         dict.append(result)
       }
       result(dict as Array)
@@ -78,9 +78,16 @@ import HealthKit
   private func returnDateTime(date: Date, format: String) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = format
-    formatter.locale = Locale(identifier: "en_US_POSIX")
+    formatter.locale = Locale(identifier: "ja_JP")
     let result = formatter.string(from: date)
     return result
+  }
+  
+  private func formateTimeDuration(timeInterval: TimeInterval) -> String{
+    let formatter = DateFormatter()
+    formatter.dateFormat = "H:mm:ss"
+    let dateFromTimeInterval = Date(timeIntervalSinceReferenceDate: timeInterval)
+    return formatter.string(from: dateFromTimeInterval)
   }
 }
 
@@ -89,12 +96,11 @@ extension TimeInterval{
 
       let time = NSInteger(self)
 
-      let ms = Int((self.truncatingRemainder(dividingBy: 1)) * 1000)
       let seconds = time % 60
       let minutes = (time / 60) % 60
       let hours = (time / 3600)
 
-      return String(format: "%0.2d:%0.2d:%0.2d.%0.3d",hours,minutes,seconds,ms)
+      return String(format: "%0.2d:%0.2d:%0.2d",hours,minutes,seconds)
 
   }
 }

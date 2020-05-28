@@ -21,7 +21,7 @@ class DrawerMenu extends StatelessWidget {
             margin: EdgeInsets.all(0),
             child: Text('HASHIRU', style: TextStyle(fontSize: 24, color: Colors.white),),
           ),
-          CustomListTile(title: '走った履歴', onPressed: () {
+          CustomListTile(title: 'ランニングの履歴', onPressed: () {
             Navigator.of(context).pop();
             Navigator.of(context).push(
               MaterialPageRoute(builder: (context) => WorkoutListPage())

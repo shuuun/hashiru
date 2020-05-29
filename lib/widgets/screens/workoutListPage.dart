@@ -7,6 +7,7 @@ import 'package:hashiru/blocs/runBloc.dart';
 import 'package:hashiru/models/workout.dart';
 
 import 'package:hashiru/widgets/components/notExistsWorkoutView.dart';
+import 'package:hashiru/widgets/components/notAuthorizedView.dart';
 
 class WorkoutListPage extends StatelessWidget {
   @override
@@ -18,6 +19,7 @@ class WorkoutListPage extends StatelessWidget {
         child: Consumer<RunBloc>(
           builder: (context, bloc, child) {
             if (bloc.isHKAuthorized == null) return Center(child: CircularProgressIndicator(),);
+            if (bloc.isHKAuthorized == false) return NotAuthorizedPage(onRefresh: bloc.refreshRunInfo);
             if (bloc.isHKAuthorized == true && runBloc.existsWorkout == false) return NotExistsWorkoutView(onRefresh: bloc.refreshRunInfo,);
             return ListView.builder(
               itemCount: runBloc.workouts.length,

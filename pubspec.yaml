@@ -33,6 +33,7 @@ dependencies:
   shared_preferences: ^0.5.7+2
   flutter_circular_chart: ^0.1.0
   font_awesome_flutter: ^8.8.1
+  flutter_inappbrowser: ^2.0.2
 
 dev_dependencies:
   flutter_test:

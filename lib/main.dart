@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-import 'package:hashiru/widgets/screens/mainPage.dart';
 import 'package:hashiru/widgets/screens/appLoadingPage.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(
     ChangeNotifierProvider(
       create: (_) => RunBloc(),
@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'hashiru',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         accentColor: Colors.redAccent,
         primaryColor: Colors.redAccent,

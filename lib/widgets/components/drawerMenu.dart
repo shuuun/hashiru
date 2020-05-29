@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:flutter_inappbrowser/flutter_inappbrowser.dart';
+
 import 'package:hashiru/widgets/components/goalSettingDialog.dart';
 import 'package:hashiru/widgets/components/customListTile.dart';
 
@@ -7,6 +9,7 @@ import 'package:hashiru/widgets/screens/workoutListPage.dart';
 
 class DrawerMenu extends StatelessWidget {
   final Future<void> Function() refreshValue;
+  final browser = ChromeSafariBrowser(bFallback: InAppBrowser());
 
   DrawerMenu(this.refreshValue);
 
@@ -32,7 +35,16 @@ class DrawerMenu extends StatelessWidget {
             await GoalSettingDialog().showGoalSettingDialog(context);
             refreshValue();
           }),
-          CustomListTile(title: 'ライセンス', onPressed: () => showLicensePage(context: context,applicationName: 'HASHIRU',),)
+          CustomListTile(title: 'ライセンス', onPressed: () => showLicensePage(context: context,applicationName: 'HASHIRU',),),
+          CustomListTile(title: 'お問い合わせ', onPressed: () async {
+            Navigator.of(context).pop();
+            await browser.open(
+              url: 'https://forms.gle/CUTZwFQGEVNmQdd3A',
+              options: ChromeSafariBrowserClassOptions(
+                iosSafariOptions: IosSafariOptions()
+              )
+            );
+          })
         ],
       ),
     );

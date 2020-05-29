@@ -66,12 +66,7 @@ class MainPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('HASHIRU'),
       ),
-      drawer: Consumer<RunBloc>(
-        builder: (context, bloc, child) {
-          if (bloc.isHKAuthorized == null || bloc.isHKAuthorized == true && runBloc.existsWorkout == false) return Container();
-          return bloc.isHKAuthorized ? DrawerMenu(refreshValue) : Container();
-        },
-      ),
+      drawer: DrawerMenu(refreshValue),
       body: SafeArea(
         child: Selector<RunBloc, bool>(
           selector: (context, state) => state.isHKAuthorized,

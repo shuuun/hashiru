@@ -50,6 +50,15 @@ class DrawerMenu extends StatelessWidget {
                 iosSafariOptions: IosSafariOptions()
               )
             );
+          }),
+          CustomListTile(title: '利用規約', onPressed: () async {
+            Navigator.of(context).pop();
+            await browser.open(
+              url: 'https://shuuun.github.io/hashiru/eula.md',
+              options: ChromeSafariBrowserClassOptions(
+                iosSafariOptions: IosSafariOptions()
+              )
+            );
           })
         ],
       ),

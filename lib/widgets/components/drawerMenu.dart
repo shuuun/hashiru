@@ -9,6 +9,7 @@ import 'package:hashiru/widgets/components/goalSettingDialog.dart';
 import 'package:hashiru/widgets/components/customListTile.dart';
 
 import 'package:hashiru/widgets/screens/workoutListPage.dart';
+import 'package:hashiru/widgets/screens/markdownRenderPage.dart';
 
 class DrawerMenu extends StatelessWidget {
   final Future<void> Function() refreshValue;
@@ -53,12 +54,15 @@ class DrawerMenu extends StatelessWidget {
           }),
           CustomListTile(title: '利用規約', onPressed: () async {
             Navigator.of(context).pop();
-            await browser.open(
-              url: 'https://shuuun.github.io/hashiru/eula.md',
-              options: ChromeSafariBrowserClassOptions(
-                iosSafariOptions: IosSafariOptions()
-              )
+            Navigator.of(context).push(
+              MaterialPageRoute(builder: (context) => MarkdownRenderPage(title: '利用規約', filePath: 'docs/eula.md',))
             );
+            // await browser.open(
+            //   url: 'https://shuuun.github.io/hashiru/eula.md',
+            //   options: ChromeSafariBrowserClassOptions(
+            //     iosSafariOptions: IosSafariOptions()
+            //   )
+            // );
           })
         ],
       ),

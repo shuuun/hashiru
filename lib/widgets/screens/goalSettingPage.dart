@@ -102,7 +102,22 @@ class _GoalSettingPageState extends State<GoalSettingPage> {
                 );
               },
             ),
-            SizedBox(height: 20,),
+            SizedBox(height: 30,),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pushAndRemoveUntil(
+                  MaterialPageRoute(builder: (context) => MainPage()),
+                  (r) => false
+                );
+              },
+              child: Container(
+                height: 20,
+                decoration: BoxDecoration(
+                  border: Border(bottom: BorderSide())
+                ),
+                child: Text('スキップする'),
+              ),
+            )
           ],
         ),
       ),

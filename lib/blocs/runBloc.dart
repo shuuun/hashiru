@@ -17,7 +17,7 @@ class RunBloc with ChangeNotifier {
   double _runPercentage;
   double get runPercentage => _runPercentage;
 
-  double _goal = 100;
+  double _goal = 50;
   double get goal => _goal;
 
   List<Workout> _workouts;

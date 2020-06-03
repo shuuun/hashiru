@@ -104,7 +104,9 @@ class _GoalSettingPageState extends State<GoalSettingPage> {
             ),
             SizedBox(height: 30,),
             InkWell(
-              onTap: () {
+              onTap: () async {
+                await runBloc.saveGoal('50');
+                await runBloc.refreshRunInfo();
                 Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => MainPage()),
                   (r) => false

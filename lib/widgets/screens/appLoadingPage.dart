@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:hashiru/widgets/screens/mainPage.dart';
-import 'package:hashiru/widgets/screens/goalSettingPage.dart';
+import 'package:hashiru/widgets/screens/firstLaunchScreen.dart';
 
 
 class AppLoadingPage extends StatefulWidget {
@@ -25,7 +25,7 @@ class _AppLoadingPageState extends State<AppLoadingPage> {
     if (goal == null) {
       if (mounted) {
         Navigator.of(context).pushAndRemoveUntil(
-          MaterialPageRoute(builder: (context) => GoalSettingPage()),
+          MaterialPageRoute(builder: (context) => FirstLaunchScreen()),
           (r) => false
         );
       }

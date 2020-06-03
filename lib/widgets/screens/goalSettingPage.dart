@@ -92,6 +92,7 @@ class _GoalSettingPageState extends State<GoalSettingPage> {
                   text: '設定する',
                   enabled: enable,
                   onPressed: () async {
+                    FocusScope.of(context).unfocus();
                     await runBloc.saveGoal(_controller.text);
                     await runBloc.refreshRunInfo();
                     Navigator.of(context).pushAndRemoveUntil(
@@ -105,6 +106,7 @@ class _GoalSettingPageState extends State<GoalSettingPage> {
             SizedBox(height: 30,),
             InkWell(
               onTap: () async {
+                FocusScope.of(context).unfocus();
                 await runBloc.saveGoal('50');
                 await runBloc.refreshRunInfo();
                 Navigator.of(context).pushAndRemoveUntil(

@@ -79,7 +79,7 @@ class MainPage extends StatelessWidget {
                 child: SingleChildScrollView(
                   physics: AlwaysScrollableScrollPhysics(),
                   child: Container(
-                    height: MediaQuery.of(context).size.height * 0.8,
+                    height: MediaQuery.of(context).size.height,
                     child: Column(
                       children: [
                         SizedBox(height: 20,),

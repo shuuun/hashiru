@@ -50,13 +50,13 @@ class WorkoutListTile extends StatelessWidget {
         color: Colors.white,
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey[400],
-            offset: Offset(0.0, 3.0),
-            blurRadius: 5.0
-          )
-        ]
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: Colors.grey[400],
+        //     offset: Offset(0.0, 3.0),
+        //     blurRadius: 5.0
+        //   )
+        // ]
       ),
       child: Row(
         children: [
@@ -65,8 +65,8 @@ class WorkoutListTile extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(workout.workoutDay, style: TextStyle(fontSize: 16),),
-                Text('合計時間 : ' + workout.duration, style: TextStyle(fontSize: 16),)
+                Text(workout.workoutDay, style: TextStyle(fontSize: 16, color: Colors.black),),
+                Text('合計時間 : ' + workout.duration, style: TextStyle(fontSize: 16, color: Colors.black))
               ],
             ),
           ),
@@ -79,7 +79,7 @@ class WorkoutListTile extends StatelessWidget {
                 Text(workout.distance.toStringAsFixed(2), textAlign: TextAlign.end, style: TextStyle(color: Colors.redAccent, fontSize: 35, fontWeight: FontWeight.bold),),
                 Align(
                   alignment: Alignment.bottomRight,
-                  child: Text('km', style: TextStyle(fontSize: 20),),
+                  child: Text('km', style: TextStyle(fontSize: 20, color: Colors.black),),
                 )
               ],
             ),

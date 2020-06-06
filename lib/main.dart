@@ -27,6 +27,9 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.redAccent,
         primaryColor: Colors.redAccent,
       ),
+      // darkTheme: ThemeData.dark().copyWith(
+      //   accentColor: Colors.white
+      // ),
       // TextFieldコピペ時の問題やポップアップメニューの正しいローカライズのために
       // localizationsDelegates を指定することが必須。
       // https://github.com/flutter/flutter/issues/19120

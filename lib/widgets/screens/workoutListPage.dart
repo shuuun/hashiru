@@ -71,13 +71,19 @@ class WorkoutListTile extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: Row(
+            child: Container(
+              height: 38,
+              child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Text(workout.distance.toStringAsFixed(2), textAlign: TextAlign.end, style: TextStyle(color: Colors.redAccent, fontSize: 30, fontWeight: FontWeight.bold),),
-                Text('km', style: TextStyle(fontSize: 20),),
+                Text(workout.distance.toStringAsFixed(2), textAlign: TextAlign.end, style: TextStyle(color: Colors.redAccent, fontSize: 35, fontWeight: FontWeight.bold),),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Text('km', style: TextStyle(fontSize: 20),),
+                )
               ],
             ),
+            )
           )
         ],
       )

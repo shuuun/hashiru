@@ -4,11 +4,9 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
-import 'package:hashiru/widgets/components/goalSettingDialog.dart';
 import 'package:hashiru/widgets/components/likeDropDownButton.dart';
 import 'package:hashiru/widgets/components/selectWorkoutMonthPicker.dart';
 import 'package:hashiru/widgets/components/notAuthorizedView.dart';
@@ -76,112 +74,108 @@ class MainPage extends StatelessWidget {
             return isHKAuthorized ? 
               RefreshIndicator(
                 onRefresh: () async => await refreshValue(),
-                child: SingleChildScrollView(
-                  physics: AlwaysScrollableScrollPhysics(),
-                  child: Container(
-                    height: MediaQuery.of(context).size.height,
-                    child: Column(
-                      children: [
-                        SizedBox(height: 20,),
-                        LikeDropDownButton(
-                          content: workedoutMonth,
-                          onPressed: () async {
-                            workedoutMonth.value = await SelectWorkoutMonthPicker().showPicker(context, runBloc.getWorkedoutMonths(), workedoutMonth.value);
-                            await refreshValue();
-                          },
-                        ),
-                        SizedBox(height: 20,),
-                        Consumer<RunBloc>(
-                          builder: (context, bloc, child) {
-                            return Column(
-                              children: [
-                                RichText(
-                                  text: TextSpan(
-                                    text: '1ヶ月の目標 : ',
-                                    style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
-                                    children: [
-                                      TextSpan(
-                                        text: bloc.runDistance != null ? bloc.goal.toStringAsFixed(1) : '--',
-                                        style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
-                                      ),
-                                      TextSpan(
-                                        text: ' km'
-                                      )
-                                    ]
-                                  ),
-                                ),
-                                SizedBox(height: 10,),
-                              ],
-                            );
-                          },
-                        ),
-                        Consumer<RunBloc>(
-                          builder: (context, bloc, child) {
-                            return Column(
-                              children: [
-                                RichText(
-                                  text: TextSpan(
-                                    text: '走った距離 : ',
-                                    style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
-                                    children: [
-                                      TextSpan(
-                                        text: bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(1) : '--',
-                                        style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
-                                      ),
-                                      TextSpan(
-                                        text: ' km'
-                                      )
-                                    ]
-                                  ),
-                                ),
-                                SizedBox(height: 10,),
-                              ],
-                            );
-                          },
-                        ),
-                        SizedBox(height: 30,),
-                        Consumer<RunBloc>(
-                          builder: (context, bloc, child) {
-                            return bloc.runPercentage == null ?
-                              Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),),) : 
-                              Container(
-                                alignment: Alignment.center,
-                                child: AnimatedCircularChart(
-                                  key: _chartKey,
-                                  percentageValues: true,
-                                  size: Size(350, 350),
-                                  chartType: CircularChartType.Radial,
-                                  initialChartData: generateChartData(bloc.runPercentage),
-                                  holeLabel: 'HASHITTA',
-                                  labelStyle: TextStyle(color: Colors.redAccent, fontSize: 20, fontWeight: FontWeight.bold),
-                                ),
-                            );
-                          },
-                        ),
-                        Selector<RunBloc, double>(
-                          selector: (context, per) => per.runPercentage,
-                          builder: (context, per, child) {
-                            return RichText(
+                child: ListView(
+                  children: [
+                    SizedBox(height: 20,),
+                    LikeDropDownButton(
+                      content: workedoutMonth,
+                      onPressed: () async {
+                        workedoutMonth.value = await SelectWorkoutMonthPicker().showPicker(context, runBloc.getWorkedoutMonths(), workedoutMonth.value);
+                        await refreshValue();
+                      },
+                    ),
+                    SizedBox(height: 20,),
+                    Consumer<RunBloc>(
+                      builder: (context, bloc, child) {
+                        return Column(
+                          children: [
+                            RichText(
                               text: TextSpan(
-                                text: '達成率 : ',
+                                text: '1ヶ月の目標 : ',
                                 style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
                                 children: [
                                   TextSpan(
-                                    text: per != null ? per.toStringAsFixed(0) : '--',
+                                    text: bloc.runDistance != null ? bloc.goal.toStringAsFixed(1) : '--',
                                     style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
                                   ),
-                                  TextSpan(text: ' %')
+                                  TextSpan(
+                                    text: ' km'
+                                  )
                                 ]
                               ),
-                            );
-                          },
+                            ),
+                            SizedBox(height: 10,),
+                          ],
+                        );
+                      },
+                    ),
+                    Consumer<RunBloc>(
+                      builder: (context, bloc, child) {
+                        return Column(
+                          children: [
+                            RichText(
+                              text: TextSpan(
+                                text: '走った距離 : ',
+                                style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
+                                children: [
+                                  TextSpan(
+                                    text: bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(1) : '--',
+                                    style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
+                                  ),
+                                  TextSpan(
+                                    text: ' km'
+                                  )
+                                ]
+                              ),
+                            ),
+                            SizedBox(height: 10,),
+                          ],
+                        );
+                      },
+                    ),
+                    SizedBox(height: 30,),
+                    Consumer<RunBloc>(
+                      builder: (context, bloc, child) {
+                        return bloc.runPercentage == null ?
+                          Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.redAccent),),) : 
+                          Container(
+                            alignment: Alignment.center,
+                            child: AnimatedCircularChart(
+                              key: _chartKey,
+                              percentageValues: true,
+                              size: Size(350, 350),
+                              chartType: CircularChartType.Radial,
+                              initialChartData: generateChartData(bloc.runPercentage),
+                              holeLabel: 'HASHITTA',
+                              labelStyle: TextStyle(color: Colors.redAccent, fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                        );
+                      },
+                    ),
+                    Selector<RunBloc, double>(
+                      selector: (context, per) => per.runPercentage,
+                      builder: (context, per, child) {
+                        return Align(
+                          alignment: Alignment.center,
+                          child: RichText(
+                          text: TextSpan(
+                            text: '達成率 : ',
+                            style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
+                            children: [
+                              TextSpan(
+                                text: per != null ? per.toStringAsFixed(0) : '--',
+                                style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
+                              ),
+                              TextSpan(text: ' %')
+                            ]
+                          ),
                         ),
-                        Expanded(child: Container(),)
-                      ],
-                  ),
-                )
-              )
-            ) : NotAuthorizedPage(onRefresh: refreshValue,);
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ) : NotAuthorizedPage(onRefresh: refreshValue,);
           },
         )
       )

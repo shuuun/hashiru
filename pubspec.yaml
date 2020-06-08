@@ -35,6 +35,7 @@ dependencies:
   font_awesome_flutter: ^8.8.1
   flutter_inappbrowser: ^2.0.2
   flutter_markdown: ^0.4.1
+  firebase_messaging: ^6.0.16
 
 dev_dependencies:
   flutter_test:

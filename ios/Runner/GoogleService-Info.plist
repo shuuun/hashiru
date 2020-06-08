@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>853607157028-85eh838naq3qeoe63mca149lcglgd2gh.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.853607157028-85eh838naq3qeoe63mca149lcglgd2gh</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBkiClMkvhHrIsRrwy9lBdwhR5v2KhlHlI</string>
+	<key>GCM_SENDER_ID</key>
+	<string>853607157028</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.arupaka.hashiru</string>
+	<key>PROJECT_ID</key>
+	<string>hashiru-1d31a</string>
+	<key>STORAGE_BUCKET</key>
+	<string>hashiru-1d31a.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:853607157028:ios:d0ac0e8a9d174317d5b7b1</string>
+	<key>DATABASE_URL</key>
+	<string>https://hashiru-1d31a.firebaseio.com</string>
+</dict>
+</plist>

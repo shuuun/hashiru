@@ -1,6 +1,7 @@
 import UIKit
 import Flutter
 import HealthKit
+import Firebase
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -8,6 +9,8 @@ import HealthKit
     _ application: UIApplication,
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
+    
+    FirebaseApp.configure()
     
     ensureInit(application)
     

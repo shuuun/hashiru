@@ -1,7 +1,6 @@
 import UIKit
 import Flutter
 import HealthKit
-import Firebase
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
@@ -10,12 +9,14 @@ import Firebase
     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
   ) -> Bool {
     
-    FirebaseApp.configure()
-    
     ensureInit(application)
     
     var flutter_native_splash = 1
     UIApplication.shared.isStatusBarHidden = false
+    
+    if #available(iOS 10.0, *) {
+      UNUserNotificationCenter.current().delegate = self as? UNUserNotificationCenterDelegate
+    }
 
     GeneratedPluginRegistrant.register(with: self)
     return super.application(application, didFinishLaunchingWithOptions: launchOptions)

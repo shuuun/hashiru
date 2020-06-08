@@ -39,6 +39,11 @@
 	<string>走った距離にアクセスするために2つの項目の許可が必要です</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>走った距離にアクセスするために2つの項目の許可が必要です</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>fetch</string>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

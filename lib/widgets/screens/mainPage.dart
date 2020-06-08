@@ -12,6 +12,7 @@ import 'package:hashiru/widgets/components/selectWorkoutMonthPicker.dart';
 import 'package:hashiru/widgets/components/notAuthorizedView.dart';
 import 'package:hashiru/widgets/components/notExistsWorkoutView.dart';
 import 'package:hashiru/widgets/components/drawerMenu.dart';
+import 'package:hashiru/widgets/components/customCard.dart';
 
 class MainPage extends StatelessWidget {
   
@@ -85,53 +86,69 @@ class MainPage extends StatelessWidget {
                       },
                     ),
                     SizedBox(height: 20,),
-                    Consumer<RunBloc>(
-                      builder: (context, bloc, child) {
-                        return Column(
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                text: '1ヶ月の目標 : ',
-                                style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
-                                children: [
-                                  TextSpan(
-                                    text: bloc.runDistance != null ? bloc.goal.toStringAsFixed(1) : '--',
-                                    style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
-                                  ),
-                                  TextSpan(
-                                    text: ' km'
-                                  )
-                                ]
-                              ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: CustomCard(
+                            child: Consumer<RunBloc>(
+                              builder: (context, bloc, child) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('目標', style: TextStyle(fontSize: 18), textAlign: TextAlign.start,),
+                                    Row(
+                                      children: [
+                                        Text(bloc.runDistance != null ? bloc.goal.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 30),),
+                                        Text(' km')
+                                      ],
+                                    )
+                                  ],
+                                );
+                              },
                             ),
-                            SizedBox(height: 10,),
-                          ],
-                        );
-                      },
-                    ),
-                    Consumer<RunBloc>(
-                      builder: (context, bloc, child) {
-                        return Column(
-                          children: [
-                            RichText(
-                              text: TextSpan(
-                                text: '走った距離 : ',
-                                style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
-                                children: [
-                                  TextSpan(
-                                    text: bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(1) : '--',
-                                    style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
-                                  ),
-                                  TextSpan(
-                                    text: ' km'
-                                  )
-                                ]
-                              ),
+                          ),
+                        ),
+                        Expanded(
+                          child: CustomCard(
+                            child: Consumer<RunBloc>(
+                              builder: (context, bloc, child) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('走った距離', style: TextStyle(fontSize: 18), textAlign: TextAlign.start,),
+                                    Row(
+                                      children: [
+                                        Text(bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 30),),
+                                        Text(' km')
+                                      ],
+                                    )
+                                  ],
+                                );
+                              },
                             ),
-                            SizedBox(height: 10,),
-                          ],
-                        );
-                      },
+                          ),
+                        ),
+                        Expanded(
+                          child: CustomCard(
+                            child: Consumer<RunBloc>(
+                              builder: (context, bloc, child) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('達成率', style: TextStyle(fontSize: 18), textAlign: TextAlign.start,),
+                                    Row(
+                                      children: [
+                                        Text(bloc.runPercentage != null ? bloc.runPercentage.toStringAsFixed(0) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 30),),
+                                        Text(' %')
+                                      ],
+                                    )
+                                  ],
+                                );
+                              },
+                            ),
+                          )
+                        )
+                      ],
                     ),
                     SizedBox(height: 30,),
                     Consumer<RunBloc>(
@@ -149,27 +166,6 @@ class MainPage extends StatelessWidget {
                               holeLabel: 'HASHITTA',
                               labelStyle: TextStyle(color: Colors.redAccent, fontSize: 20, fontWeight: FontWeight.bold),
                             ),
-                        );
-                      },
-                    ),
-                    Selector<RunBloc, double>(
-                      selector: (context, per) => per.runPercentage,
-                      builder: (context, per, child) {
-                        return Align(
-                          alignment: Alignment.center,
-                          child: RichText(
-                          text: TextSpan(
-                            text: '達成率 : ',
-                            style: DefaultTextStyle.of(context).style.copyWith(fontSize: 20),
-                            children: [
-                              TextSpan(
-                                text: per != null ? per.toStringAsFixed(0) : '--',
-                                style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 33)
-                              ),
-                              TextSpan(text: ' %')
-                            ]
-                          ),
-                        ),
                         );
                       },
                     ),

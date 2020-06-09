@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:hashiru/widgets/screens/mainPage.dart';
 import 'package:hashiru/widgets/screens/firstLaunchScreen.dart';
+
+import 'package:hashiru/widgets/components/pageSwitcher.dart';
 
 
 class AppLoadingPage extends StatefulWidget {
@@ -32,7 +33,7 @@ class _AppLoadingPageState extends State<AppLoadingPage> {
       return;
     }
     Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (context) => MainPage()),
+      MaterialPageRoute(builder: (context) => PageSwitcher()),
       (r) => false
     );
   }

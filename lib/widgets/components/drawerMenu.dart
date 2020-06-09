@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
-import 'package:hashiru/widgets/components/goalSettingDialog.dart';
 import 'package:hashiru/widgets/components/customListTile.dart';
 
 import 'package:hashiru/widgets/screens/workoutListPage.dart';
@@ -36,12 +35,6 @@ class DrawerMenu extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => WorkoutListPage())
               );
             }),
-          // runBloc.isHKAuthorized == false ? Container() : 
-          //   CustomListTile(title: '目標を再設定する', onPressed: () async {
-          //     Navigator.of(context).pop();
-          //     await GoalSettingDialog().showGoalSettingDialog(context);
-          //     refreshValue();
-          //   }),
           CustomListTile(title: 'お問い合わせ', onPressed: () async {
             Navigator.of(context).pop();
             await browser.open(

@@ -36,12 +36,12 @@ class DrawerMenu extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => WorkoutListPage())
               );
             }),
-          runBloc.isHKAuthorized == false ? Container() : 
-            CustomListTile(title: '目標を再設定する', onPressed: () async {
-              Navigator.of(context).pop();
-              await GoalSettingDialog().showGoalSettingDialog(context);
-              refreshValue();
-            }),
+          // runBloc.isHKAuthorized == false ? Container() : 
+          //   CustomListTile(title: '目標を再設定する', onPressed: () async {
+          //     Navigator.of(context).pop();
+          //     await GoalSettingDialog().showGoalSettingDialog(context);
+          //     refreshValue();
+          //   }),
           CustomListTile(title: 'お問い合わせ', onPressed: () async {
             Navigator.of(context).pop();
             await browser.open(

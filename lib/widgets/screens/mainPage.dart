@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
@@ -13,6 +14,7 @@ import 'package:hashiru/widgets/components/notAuthorizedView.dart';
 import 'package:hashiru/widgets/components/notExistsWorkoutView.dart';
 import 'package:hashiru/widgets/components/drawerMenu.dart';
 import 'package:hashiru/widgets/components/customCard.dart';
+import 'package:hashiru/widgets/components/goalSettingDialog.dart';
 
 class MainPage extends StatelessWidget {
   
@@ -64,6 +66,15 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('HASHIRU'),
+        actions: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.flag),
+            onPressed: () async {
+              await GoalSettingDialog().showGoalSettingDialog(context);
+              refreshValue();
+            },
+          )
+        ],
       ),
       drawer: DrawerMenu(refreshValue),
       body: SafeArea(

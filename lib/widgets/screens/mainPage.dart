@@ -67,16 +67,20 @@ class MainPage extends StatelessWidget {
       appBar: AppBar(
         title: Text('HASHIRU'),
         actions: [
-          IconButton(
-            icon: Icon(FontAwesomeIcons.flag),
-            onPressed: () async {
-              await GoalSettingDialog().showGoalSettingDialog(context);
-              refreshValue();
+          Consumer<RunBloc>(
+            builder: (context, bloc, child) {
+              return bloc.isHKAuthorized ? 
+                IconButton(
+                  icon: Icon(FontAwesomeIcons.flag),
+                  onPressed: () async {
+                    await GoalSettingDialog().showGoalSettingDialog(context);
+                    refreshValue();
+                  },
+                ) : Container();
             },
           )
         ],
       ),
-      drawer: DrawerMenu(refreshValue),
       body: SafeArea(
         child: Selector<RunBloc, bool>(
           selector: (context, state) => state.isHKAuthorized,

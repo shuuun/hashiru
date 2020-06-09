@@ -93,10 +93,10 @@ class MainPage extends StatelessWidget {
                             child: Consumer<RunBloc>(
                               builder: (context, bloc, child) {
                                 return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('目標', style: TextStyle(fontSize: 18), textAlign: TextAlign.start,),
                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(bloc.runDistance != null ? bloc.goal.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 30),),
                                         Text(' km')
@@ -113,10 +113,10 @@ class MainPage extends StatelessWidget {
                             child: Consumer<RunBloc>(
                               builder: (context, bloc, child) {
                                 return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text('走った距離', style: TextStyle(fontSize: 18), textAlign: TextAlign.start,),
                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 30),),
                                         Text(' km')
@@ -133,10 +133,10 @@ class MainPage extends StatelessWidget {
                             child: Consumer<RunBloc>(
                               builder: (context, bloc, child) {
                                 return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text('達成率', style: TextStyle(fontSize: 18), textAlign: TextAlign.start,),
+                                    Text('達成率', style: TextStyle(fontSize: 18)),
                                     Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(bloc.runPercentage != null ? bloc.runPercentage.toStringAsFixed(0) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 30),),
                                         Text(' %')

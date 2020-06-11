@@ -69,6 +69,7 @@ class MainPage extends StatelessWidget {
         actions: [
           Consumer<RunBloc>(
             builder: (context, bloc, child) {
+              if (bloc.isHKAuthorized == null) return Container();
               return bloc.isHKAuthorized ? 
                 IconButton(
                   icon: Icon(FontAwesomeIcons.flag),
@@ -109,7 +110,7 @@ class MainPage extends StatelessWidget {
                               builder: (context, bloc, child) {
                                 return Column(
                                   children: [
-                                    Text('目標', style: TextStyle(fontSize: 18), textAlign: TextAlign.start,),
+                                    Text('目標', style: TextStyle(fontSize: 16), textAlign: TextAlign.start,),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -129,7 +130,7 @@ class MainPage extends StatelessWidget {
                               builder: (context, bloc, child) {
                                 return Column(
                                   children: [
-                                    Text('走った距離', style: TextStyle(fontSize: 18), textAlign: TextAlign.start,),
+                                    Text('走った距離', style: TextStyle(fontSize: 16), textAlign: TextAlign.start,),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
@@ -149,7 +150,7 @@ class MainPage extends StatelessWidget {
                               builder: (context, bloc, child) {
                                 return Column(
                                   children: [
-                                    Text('達成率', style: TextStyle(fontSize: 18)),
+                                    Text('達成率', style: TextStyle(fontSize: 16)),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [

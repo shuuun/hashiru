@@ -29,7 +29,7 @@ class PageSwitcher extends StatelessWidget {
               ),
               BottomNavigationBarItem(
                 icon: Icon(FontAwesomeIcons.list),
-                title: Text('ワークアウト')
+                title: Text('履歴')
               ),
               BottomNavigationBarItem(
                 icon: Icon(FontAwesomeIcons.cog),

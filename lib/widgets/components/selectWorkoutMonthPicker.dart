@@ -11,6 +11,19 @@ class SelectWorkoutMonthPicker {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
+              height: 44,
+              width: double.infinity,
+              alignment: Alignment.centerRight,
+              child: FlatButton(
+                onPressed: () => Navigator.of(context).pop(_selected),
+                child: Text('選択', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Colors.redAccent, fontWeight: FontWeight.bold),),
+              ),
+            ),
+            Container(
+              height: 1,
+              decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black38))),
+            ),
+            Container(
               height: 250,
               child: CupertinoPicker(
                 itemExtent: 40,

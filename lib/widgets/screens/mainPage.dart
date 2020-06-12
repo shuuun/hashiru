@@ -183,7 +183,7 @@ class MainPage extends StatelessWidget {
                               holeLabel: 'HASHITTA',
                               labelStyle: TextStyle(color: Colors.redAccent, fontSize: 20, fontWeight: FontWeight.bold),
                             ),
-                        );
+                          );
                       },
                     ),
                   ],

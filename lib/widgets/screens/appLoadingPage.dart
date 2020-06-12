@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:hashiru/widgets/screens/firstLaunchScreen.dart';
 
-import 'package:hashiru/widgets/components/pageSwitcher.dart';
+import 'package:hashiru/widgets/screens/pageSwitcher.dart';
 
 
 class AppLoadingPage extends StatefulWidget {

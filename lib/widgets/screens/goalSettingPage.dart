@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
-import 'package:hashiru/widgets/screens/mainPage.dart';
+import 'package:hashiru/widgets/screens/pageSwitcher.dart';
 
 import 'package:hashiru/widgets/components/roundedButtom.dart';
 
@@ -96,7 +96,7 @@ class _GoalSettingPageState extends State<GoalSettingPage> {
                     await runBloc.saveGoal(_controller.text);
                     await runBloc.refreshRunInfo();
                     Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => MainPage()),
+                      MaterialPageRoute(builder: (context) => PageSwitcher()),
                       (r) => false
                     );
                   },
@@ -110,7 +110,7 @@ class _GoalSettingPageState extends State<GoalSettingPage> {
                 await runBloc.saveGoal('50');
                 await runBloc.refreshRunInfo();
                 Navigator.of(context).pushAndRemoveUntil(
-                  MaterialPageRoute(builder: (context) => MainPage()),
+                  MaterialPageRoute(builder: (context) => PageSwitcher()),
                   (r) => false
                 );
               },

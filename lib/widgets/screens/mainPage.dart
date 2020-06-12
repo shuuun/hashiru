@@ -8,11 +8,12 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
+import 'package:hashiru/widgets/screens/pageSwitcher.dart';
+
 import 'package:hashiru/widgets/components/likeDropDownButton.dart';
 import 'package:hashiru/widgets/components/selectWorkoutMonthPicker.dart';
 import 'package:hashiru/widgets/components/notAuthorizedView.dart';
 import 'package:hashiru/widgets/components/notExistsWorkoutView.dart';
-import 'package:hashiru/widgets/components/drawerMenu.dart';
 import 'package:hashiru/widgets/components/customCard.dart';
 import 'package:hashiru/widgets/components/goalSettingDialog.dart';
 

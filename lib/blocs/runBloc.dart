@@ -43,7 +43,8 @@ class RunBloc with ChangeNotifier {
         return;
       }
       await loadSavedGoal();
-      _runPercentage = _calculateRunPercentage(_filterWorkoutList(_workouts, workoutMonth ?? '${now.year}/${now.month.toString().padLeft(2, '0')}'));
+      final selectedMonthList = _filterWorkoutList(_workouts, workoutMonth ?? '${now.year}/${now.month.toString().padLeft(2, '0')}');
+      _runPercentage = _calculateRunPercentage(selectedMonthList);
     }
     notifyListeners();
   }
@@ -76,6 +77,8 @@ class RunBloc with ChangeNotifier {
     return double.parse(result.toStringAsFixed(0));
   }
 
+
+
   Future<void> loadSavedGoal() async {
     final prefs = await SharedPreferences.getInstance();
     _goal = prefs.getDouble('goal') ?? _goal;
@@ -84,6 +87,17 @@ class RunBloc with ChangeNotifier {
   Future<void> saveGoal(String goal) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setDouble('goal', double.parse(goal));
+  }
+
+  /// このメソッドはSimulatorでもデータを見れるようにデータを流し込む
+  /// スクショをとる時やSimulatorで画面の小さい端末をデバッグする時に使う
+  void insertDummyData() {
+    isHKAuthorized = true;
+    existsWorkout = true;
+    _runDistance = 50;
+    final result = (runDistance / goal) * 100;
+    _runPercentage = double.parse(result.toStringAsFixed(0));
+    notifyListeners();
   }
 
   void clear() {

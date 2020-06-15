@@ -5,7 +5,7 @@ class CustomCard extends StatelessWidget {
   final Widget child;
   final double height;
   final double width;
-  CustomCard({@required this.child, this.height = 85, this.width});
+  CustomCard({@required this.child, this.height = 75, this.width});
 
   @override
   Widget build(BuildContext context) {

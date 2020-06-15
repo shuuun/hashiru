@@ -66,6 +66,11 @@ class MainPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        // デバッグする用
+        // title: InkWell(
+        //   onTap: () => runBloc.insertDummyData(),
+        //   child: Text('HASHIRU'),
+        // ),
         title: Text('HASHIRU'),
         actions: [
           Consumer<RunBloc>(
@@ -80,7 +85,7 @@ class MainPage extends StatelessWidget {
                   },
                 ) : Container();
             },
-          )
+          ),
         ],
       ),
       body: SafeArea(
@@ -111,12 +116,12 @@ class MainPage extends StatelessWidget {
                               builder: (context, bloc, child) {
                                 return Column(
                                   children: [
-                                    Text('目標', style: TextStyle(fontSize: 16), textAlign: TextAlign.start,),
+                                    Text('目標', style: TextStyle(fontSize: 15), textAlign: TextAlign.start,),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Text(bloc.runDistance != null ? bloc.goal.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 30),),
-                                        Text(' km')
+                                        Text(bloc.runDistance != null ? bloc.goal.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 27),),
+                                        Text('km', textAlign: TextAlign.center, style: TextStyle(fontSize: 14),)
                                       ],
                                     )
                                   ],
@@ -131,12 +136,12 @@ class MainPage extends StatelessWidget {
                               builder: (context, bloc, child) {
                                 return Column(
                                   children: [
-                                    Text('走った距離', style: TextStyle(fontSize: 16), textAlign: TextAlign.start,),
+                                    Text('現在', style: TextStyle(fontSize: 15), textAlign: TextAlign.start,),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Text(bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 30),),
-                                        Text(' km')
+                                        Text(bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 27),),
+                                        Text('km', textAlign: TextAlign.center, style: TextStyle(fontSize: 14),)
                                       ],
                                     )
                                   ],
@@ -151,12 +156,12 @@ class MainPage extends StatelessWidget {
                               builder: (context, bloc, child) {
                                 return Column(
                                   children: [
-                                    Text('達成率', style: TextStyle(fontSize: 16)),
+                                    Text('達成率', style: TextStyle(fontSize: 15)),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Text(bloc.runPercentage != null ? bloc.runPercentage.toStringAsFixed(0) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 30),),
-                                        Text(' %')
+                                        Text(bloc.runPercentage != null ? bloc.runPercentage.toStringAsFixed(0) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 27),),
+                                        Text('%')
                                       ],
                                     )
                                   ],
@@ -167,7 +172,6 @@ class MainPage extends StatelessWidget {
                         )
                       ],
                     ),
-                    SizedBox(height: 30,),
                     Consumer<RunBloc>(
                       builder: (context, bloc, child) {
                         return bloc.runPercentage == null ?

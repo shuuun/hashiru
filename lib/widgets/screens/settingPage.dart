@@ -13,7 +13,7 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('設定')),
+      appBar: AppBar(title: Text('その他')),
       body: ListView(
         children: [
           CustomListTile(title: 'お問い合わせ', onPressed: () async {

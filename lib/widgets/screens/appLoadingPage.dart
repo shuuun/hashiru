@@ -38,10 +38,6 @@ class _AppLoadingPageState extends State<AppLoadingPage> {
     );
   }
 
-  Future<void> _initFcm() async {
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

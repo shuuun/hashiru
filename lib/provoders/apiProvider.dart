@@ -13,7 +13,7 @@ class ApiProvider {
   }
 
   static Future<List<Workout>> featchWorkoutData() async {
-    final List<Map<String, String>> workouts = await _channel.invokeMethod('getWorkoutData');
+    final workouts = await _channel.invokeMethod('getWorkoutData') as List<Map<String, String>>;
     var result = <Workout>[];
     for (var workout in workouts) {
       final distance = double.parse(workout['total_distance']);

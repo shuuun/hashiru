@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 import 'package:hashiru/models/workout.dart';
 
@@ -14,8 +13,8 @@ class ApiProvider {
   }
 
   static Future<List<Workout>> featchWorkoutData() async {
-    final workouts = await _channel.invokeMethod('getWorkoutData');
-    List<Workout> result = [];
+    final List<Map<String, String>> workouts = await _channel.invokeMethod('getWorkoutData');
+    var result = <Workout>[];
     for (var workout in workouts) {
       final distance = double.parse(workout['total_distance']);
       final _workout = Workout(

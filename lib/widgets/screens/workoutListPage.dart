@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
@@ -10,11 +11,22 @@ import 'package:hashiru/widgets/components/notExistsWorkoutView.dart';
 import 'package:hashiru/widgets/components/notAuthorizedView.dart';
 
 class WorkoutListPage extends StatelessWidget {
+
   @override
   Widget build(BuildContext context) {
     final runBloc = Provider.of<RunBloc>(context, listen: false);
     return Scaffold(
-      appBar: AppBar(title: Text('ランニングの履歴'),),
+      appBar: AppBar(
+        title: Text('ランニングの履歴'),
+        actions: [
+          IconButton(
+            icon: Icon(FontAwesomeIcons.filter),
+            onPressed: () {
+
+            },
+          )
+        ],
+      ),
       body: SafeArea(
         child: Consumer<RunBloc>(
           builder: (context, bloc, child) {

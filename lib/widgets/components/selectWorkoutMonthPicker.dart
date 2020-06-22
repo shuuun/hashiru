@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 class SelectWorkoutMonthPicker {
-  Future<String> showPicker(BuildContext context, List<String> contents, String defaultValue) async {
+  Future<String> showPicker(BuildContext context, { List<String> contents, String defaultValue }) async {
     String _selected = defaultValue;
     final result = await showModalBottomSheet<String>(
       context: context, 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomListTile extends StatelessWidget {
   final String title;
-  final Function onPressed;
+  final Function() onPressed;
 
   CustomListTile({this.title, this.onPressed});
 

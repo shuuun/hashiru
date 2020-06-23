@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 
@@ -8,10 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
-import 'package:hashiru/widgets/screens/pageSwitcher.dart';
-
-import 'package:hashiru/widgets/components/likeDropDownButton.dart';
-import 'package:hashiru/widgets/components/selectWorkoutMonthPicker.dart';
+import 'package:hashiru/widgets/components/dropDownButton.dart';
+import 'package:hashiru/widgets/components/workoutMonthPicker.dart';
 import 'package:hashiru/widgets/components/notAuthorizedView.dart';
 import 'package:hashiru/widgets/components/notExistsWorkoutView.dart';
 import 'package:hashiru/widgets/components/customCard.dart';
@@ -21,35 +20,6 @@ class MainPage extends StatelessWidget {
   
   final GlobalKey<AnimatedCircularChartState> _chartKey = GlobalKey<AnimatedCircularChartState>();
   final workedoutMonth = ValueNotifier<String>('${DateTime.now().year.toString()}/${DateTime.now().month.toString().padLeft(2, '0')}');
-
-  List<CircularStackEntry> generateChartData(double value) {
-    if (value == null) return [];
-
-    List<CircularStackEntry> data = [];
-
-    double counter = value;
-
-    while(counter > 100) {
-      data.add(
-        CircularStackEntry(
-          [
-            CircularSegmentEntry(counter, Colors.green[300], rankKey: 'completed line')
-          ]
-        )
-      );
-      counter -= 100;
-    }
-
-    data.add(
-      CircularStackEntry(
-        [
-          CircularSegmentEntry(counter, Colors.green[300], rankKey: 'completed line')
-        ]
-      )
-    );
-
-    return data;
-  }
   
   @override
   Widget build(BuildContext context) {
@@ -81,7 +51,7 @@ class MainPage extends StatelessWidget {
                   icon: Icon(FontAwesomeIcons.flag),
                   onPressed: () async {
                     await GoalSettingDialog().showGoalSettingDialog(context);
-                    refreshValue();
+                    await refreshValue();
                   },
                 ) : Container();
             },
@@ -99,15 +69,19 @@ class MainPage extends StatelessWidget {
                 onRefresh: () async => await refreshValue(),
                 child: ListView(
                   children: [
-                    SizedBox(height: 20,),
-                    LikeDropDownButton(
-                      content: workedoutMonth,
-                      onPressed: () async {
-                        workedoutMonth.value = await SelectWorkoutMonthPicker().showPicker(context, runBloc.getWorkedoutMonths(), workedoutMonth.value);
-                        await refreshValue();
-                      },
+                    Column(
+                      children: [
+                        SizedBox(height: 20,),
+                        DropDownButton(
+                          content: workedoutMonth,
+                          onPressed: () async {
+                            workedoutMonth.value = await WorkoutMonthPicker().showPicker(context, contents: runBloc.getWorkedoutMonths(), defaultValue: workedoutMonth.value);
+                            await refreshValue();
+                          },
+                        ),
+                        SizedBox(height: 20,),
+                      ],
                     ),
-                    SizedBox(height: 20,),
                     Row(
                       children: [
                         Expanded(
@@ -197,5 +171,34 @@ class MainPage extends StatelessWidget {
         )
       )
     );
+  }
+
+  List<CircularStackEntry> generateChartData(double value) {
+    if (value == null) return [];
+
+    var data = <CircularStackEntry>[];
+
+    var counter = value;
+
+    while(counter > 100) {
+      data.add(
+        CircularStackEntry(
+          [
+            CircularSegmentEntry(counter, Colors.green[300], rankKey: 'completed line')
+          ]
+        )
+      );
+      counter -= 100;
+    }
+
+    data.add(
+      CircularStackEntry(
+        [
+          CircularSegmentEntry(counter, Colors.green[300], rankKey: 'completed line')
+        ]
+      )
+    );
+
+    return data;
   }
 }

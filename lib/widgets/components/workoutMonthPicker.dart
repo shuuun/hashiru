@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-class SelectWorkoutMonthPicker {
-  Future<String> showPicker(BuildContext context, List<String> contents, String defaultValue) async {
-    String _selected = defaultValue;
+class WorkoutMonthPicker {
+  Future<String> showPicker(BuildContext context, { @required List<String> contents, String defaultValue }) async {
+    var _selected = defaultValue;
     final result = await showModalBottomSheet<String>(
       context: context, 
       builder: (context) {
@@ -16,7 +16,7 @@ class SelectWorkoutMonthPicker {
               alignment: Alignment.centerRight,
               child: FlatButton(
                 onPressed: () => Navigator.of(context).pop(_selected),
-                child: Text('選択', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Colors.redAccent, fontWeight: FontWeight.bold),),
+                child: Text('決定', textAlign: TextAlign.center, style: TextStyle(fontSize: 16, color: Colors.redAccent, fontWeight: FontWeight.bold),),
               ),
             ),
             Container(
@@ -34,10 +34,10 @@ class SelectWorkoutMonthPicker {
                   for (var content in contents) 
                     Container(
                       padding: EdgeInsets.all(8),
-                      child: Text(content),
+                      child: Text(content, style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),),
                     )
                 ],
-                scrollController: FixedExtentScrollController(initialItem: contents.indexOf(defaultValue)),
+                scrollController: FixedExtentScrollController(initialItem: defaultValue == '' ? 0 : contents.indexOf(defaultValue)),
               ),
             )
           ],

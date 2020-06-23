@@ -36,6 +36,7 @@ dependencies:
   flutter_inappbrowser: ^2.0.2
   flutter_markdown: ^0.4.1
   firebase_messaging: ^6.0.16
+  pedantic: ^1.9.0
 
 dev_dependencies:
   flutter_test:

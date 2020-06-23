@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
+import 'package:pedantic/pedantic.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
@@ -95,10 +96,10 @@ class _GoalSettingPageState extends State<GoalSettingPage> {
                     FocusScope.of(context).unfocus();
                     await runBloc.saveGoal(_controller.text);
                     await runBloc.refreshRunInfo();
-                    Navigator.of(context).pushAndRemoveUntil(
+                    unawaited(Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => PageSwitcher()),
                       (r) => false
-                    );
+                    ));
                   },
                 );
               },
@@ -109,10 +110,10 @@ class _GoalSettingPageState extends State<GoalSettingPage> {
                 FocusScope.of(context).unfocus();
                 await runBloc.saveGoal('50');
                 await runBloc.refreshRunInfo();
-                Navigator.of(context).pushAndRemoveUntil(
+                unawaited(Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => PageSwitcher()),
                   (r) => false
-                );
+                ));
               },
               child: Container(
                 height: 20,

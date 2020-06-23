@@ -62,9 +62,9 @@ import HealthKit
       guard let workouts = samples as? [HKWorkout], error == nil else {
           return
       }
-      var dict: [Dictionary<String, Any>] = []
+      var dict: [Dictionary<String, String>] = []
       for workout in workouts {
-        var result: [String: Any] = [:]
+        var result: [String: String] = [:]
         if let distance = workout.totalDistance {
           result.updateValue(String(distance.doubleValue(for: HKUnit.meter()) / 1000), forKey: "total_distance")
         }
@@ -73,7 +73,7 @@ import HealthKit
         result.updateValue(workout.duration.stringFromTimeInterval(), forKey: "duration")
         dict.append(result)
       }
-      result(dict as Array)
+      result(dict)
     }
     
     self.healthKitStore.execute(query)

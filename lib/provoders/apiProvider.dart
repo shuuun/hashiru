@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:intl/intl.dart';
 
 import 'package:hashiru/models/workout.dart';
 
@@ -14,15 +13,16 @@ class ApiProvider {
   }
 
   static Future<List<Workout>> featchWorkoutData() async {
+    //FIXME: ここでList<Map<String, String>>みたいな感じでキャストしたい
     final workouts = await _channel.invokeMethod('getWorkoutData');
-    List<Workout> result = [];
+    var result = <Workout>[];
     for (var workout in workouts) {
-      final distance = double.parse(workout['total_distance']);
+      final distance = double.parse(workout['total_distance'] as String);
       final _workout = Workout(
-        workoutDay: workout['workout_day'],
-        workoutYYYYMM: workout['workout_yyyymm'],
+        workoutDay: workout['workout_day'] as String,
+        workoutYYYYMM: workout['workout_yyyymm'] as String,
         distance: distance,
-        duration: workout['duration']
+        duration: workout['duration'] as String
       );
       result.add(_workout);
     }

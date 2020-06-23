@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'package:provider/provider.dart';
@@ -25,6 +27,19 @@ class WorkoutListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('ランニングの履歴'),
+        actions: [
+          Transform.rotate(
+            alignment: Alignment.center,
+            angle: 90 * math.pi / 180,
+            child: IconButton(
+              icon: Icon(FontAwesomeIcons.exchangeAlt),
+              onPressed: () {
+                final reversedList = workoutsValueNotifier.value.reversed.toList();
+                workoutsValueNotifier.value = reversedList;
+              },
+            ),
+          )
+        ],
       ),
       body: SafeArea(
         child: Consumer<RunBloc>(

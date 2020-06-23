@@ -1,4 +1,3 @@
-# Copied from the following sample:
 # https://github.com/flutter/samples/blob/master/animations/analysis_options.yaml
 include: package:pedantic/analysis_options.yaml
 

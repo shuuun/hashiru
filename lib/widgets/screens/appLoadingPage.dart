@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:pedantic/pedantic.dart';
 
 import 'package:hashiru/widgets/screens/firstLaunchScreen.dart';
 
@@ -25,17 +26,17 @@ class _AppLoadingPageState extends State<AppLoadingPage> {
     final goal = prefs.getDouble('goal');
     if (goal == null) {
       if (mounted) {
-        Navigator.of(context).pushAndRemoveUntil(
+        unawaited(Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => FirstLaunchScreen()),
           (r) => false
-        );
+        ));
       }
       return;
     }
-    Navigator.of(context).pushAndRemoveUntil(
+    unawaited(Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(builder: (context) => PageSwitcher()),
       (r) => false
-    );
+    ));
   }
 
   @override

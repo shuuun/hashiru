@@ -13,15 +13,16 @@ class ApiProvider {
   }
 
   static Future<List<Workout>> featchWorkoutData() async {
-    final workouts = await _channel.invokeMethod('getWorkoutData') as List<Map<String, String>>;
+    //FIXME: ここでList<Map<String, String>>みたいな感じでキャストしたい
+    final workouts = await _channel.invokeMethod('getWorkoutData');
     var result = <Workout>[];
     for (var workout in workouts) {
-      final distance = double.parse(workout['total_distance']);
+      final distance = double.parse(workout['total_distance'] as String);
       final _workout = Workout(
-        workoutDay: workout['workout_day'],
-        workoutYYYYMM: workout['workout_yyyymm'],
+        workoutDay: workout['workout_day'] as String,
+        workoutYYYYMM: workout['workout_yyyymm'] as String,
         distance: distance,
-        duration: workout['duration']
+        duration: workout['duration'] as String
       );
       result.add(_workout);
     }

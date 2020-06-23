@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
 
-class LikeDropDownButton extends StatelessWidget {
+class DropDownButton extends StatelessWidget {
   final ValueNotifier<String> content;
   final Future Function() onPressed;
 
-  LikeDropDownButton({this.content, this.onPressed});
+  DropDownButton({this.content, this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return RawMaterialButton(
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      shape: RoundedRectangleBorder(
+    return Container(
+      height: 50,
+      width: 350,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.black54),
         borderRadius: BorderRadius.circular(15)
       ),
-      onPressed: onPressed,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        width: 300,
-        height: 50,
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black54),
+      child: FlatButton(
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15)
         ),
+        onPressed: onPressed,
         child: Stack(
           alignment: Alignment.center,
           children: [

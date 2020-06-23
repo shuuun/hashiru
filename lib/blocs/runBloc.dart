@@ -43,7 +43,7 @@ class RunBloc with ChangeNotifier {
         return;
       }
       await loadSavedGoal();
-      final selectedMonthList = _filterWorkoutList(_workouts, workoutMonth ?? '${now.year}/${now.month.toString().padLeft(2, '0')}');
+      final selectedMonthList = filterWorkoutList(_workouts, workoutMonth ?? '${now.year}/${now.month.toString().padLeft(2, '0')}');
       _runPercentage = _calculateRunPercentage(selectedMonthList);
     }
     notifyListeners();
@@ -59,7 +59,7 @@ class RunBloc with ChangeNotifier {
     notifyListeners();
   }
 
-  List<Workout> _filterWorkoutList(List<Workout> workouts, String month) {
+  List<Workout> filterWorkoutList(List<Workout> workouts, String month) {
     final result = workouts.where((workout) => 
       workout.workoutYYYYMM == month
     ).toList();
@@ -86,7 +86,7 @@ class RunBloc with ChangeNotifier {
 
   Future<void> saveGoal(String goal) async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.setDouble('goal', double.parse(goal));
+    await prefs.setDouble('goal', double.parse(goal));
   }
 
   /// このメソッドはSimulatorでもデータを見れるようにデータを流し込む

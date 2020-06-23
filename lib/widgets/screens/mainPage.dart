@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 
@@ -8,8 +9,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:hashiru/blocs/runBloc.dart';
 
-import 'package:hashiru/widgets/components/likeDropDownButton.dart';
-import 'package:hashiru/widgets/components/selectWorkoutMonthPicker.dart';
+import 'package:hashiru/widgets/components/dropDownButton.dart';
+import 'package:hashiru/widgets/components/workoutMonthPicker.dart';
 import 'package:hashiru/widgets/components/notAuthorizedView.dart';
 import 'package:hashiru/widgets/components/notExistsWorkoutView.dart';
 import 'package:hashiru/widgets/components/customCard.dart';
@@ -50,7 +51,7 @@ class MainPage extends StatelessWidget {
                   icon: Icon(FontAwesomeIcons.flag),
                   onPressed: () async {
                     await GoalSettingDialog().showGoalSettingDialog(context);
-                    refreshValue();
+                    await refreshValue();
                   },
                 ) : Container();
             },
@@ -68,15 +69,19 @@ class MainPage extends StatelessWidget {
                 onRefresh: () async => await refreshValue(),
                 child: ListView(
                   children: [
-                    SizedBox(height: 20,),
-                    LikeDropDownButton(
-                      content: workedoutMonth,
-                      onPressed: () async {
-                        workedoutMonth.value = await SelectWorkoutMonthPicker().showPicker(context, contents: runBloc.getWorkedoutMonths(), defaultValue: workedoutMonth.value);
-                        await refreshValue();
-                      },
+                    Column(
+                      children: [
+                        SizedBox(height: 20,),
+                        DropDownButton(
+                          content: workedoutMonth,
+                          onPressed: () async {
+                            workedoutMonth.value = await WorkoutMonthPicker().showPicker(context, contents: runBloc.getWorkedoutMonths(), defaultValue: workedoutMonth.value);
+                            await refreshValue();
+                          },
+                        ),
+                        SizedBox(height: 20,),
+                      ],
                     ),
-                    SizedBox(height: 20,),
                     Row(
                       children: [
                         Expanded(

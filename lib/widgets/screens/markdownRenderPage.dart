@@ -15,7 +15,7 @@ class MarkdownRenderPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text(title)),
       body: SafeArea(
-        child: FutureBuilder(
+        child: FutureBuilder<String>(
           future: rootBundle.loadString(filePath),
           builder: (context, snapshot) {
             return Markdown(data: snapshot.data,);

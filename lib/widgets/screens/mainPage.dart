@@ -37,11 +37,11 @@ class MainPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         // デバッグする用
-        // title: InkWell(
-        //   onTap: () => runBloc.insertDummyData(),
-        //   child: Text('HASHIRU'),
-        // ),
-        title: Text('HASHIRU'),
+        title: InkWell(
+          onTap: () => runBloc.insertDummyData(),
+          child: Text('HASHIRU'),
+        ),
+        // title: Text('HASHIRU'),
         actions: [
           Consumer<RunBloc>(
             builder: (context, bloc, child) {

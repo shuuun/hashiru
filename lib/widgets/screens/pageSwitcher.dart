@@ -8,7 +8,7 @@ import 'package:hashiru/widgets/screens/settingPage.dart';
 
 class PageSwitcher extends StatelessWidget {
 
-  final currentIndex = ValueNotifier<int>(1);
+  final currentIndex = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {

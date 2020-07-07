@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class CustomListTile extends StatelessWidget {
+class SettingsListTile extends StatelessWidget {
   final String title;
   final Function() onPressed;
 
-  CustomListTile({this.title, this.onPressed});
+  SettingsListTile({this.title, this.onPressed});
 
   @override
   Widget build(BuildContext context) {

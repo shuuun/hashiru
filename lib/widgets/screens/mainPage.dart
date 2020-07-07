@@ -94,7 +94,7 @@ class MainPage extends StatelessWidget {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Text(bloc.runDistance != null ? bloc.goal.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 27),),
+                                        Text(bloc.totalRunDistance != null ? bloc.goal.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 27),),
                                         Text('km', textAlign: TextAlign.center, style: TextStyle(fontSize: 14),)
                                       ],
                                     )
@@ -114,7 +114,7 @@ class MainPage extends StatelessWidget {
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Text(bloc.runDistance != null ? bloc.runDistance.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 27),),
+                                        Text(bloc.totalRunDistance != null ? bloc.totalRunDistance.toStringAsFixed(1) : '--', style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 27),),
                                         Text('km', textAlign: TextAlign.center, style: TextStyle(fontSize: 14),)
                                       ],
                                     )

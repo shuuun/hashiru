@@ -11,8 +11,8 @@ class RunBloc with ChangeNotifier {
     refreshRunInfo();
   }
 
-  double _runDistance;
-  double get runDistance => _runDistance;
+  double _totalRunDistance;
+  double get totalRunDistance => _totalRunDistance;
 
   double _runPercentage;
   double get runPercentage => _runPercentage;
@@ -68,12 +68,12 @@ class RunBloc with ChangeNotifier {
 
   double _calculateRunPercentage(List<Workout> workouts) {
     if (workouts.isEmpty) {
-      _runDistance = 0;
+      _totalRunDistance = 0;
       return 0;
     }
-    final runDistanceList = workouts.map((w) => w.distance).toList();
-    _runDistance = runDistanceList.reduce((current, next) => current + next);
-    final result = (runDistance / _goal) * 100;
+    final totalRunDistanceList = workouts.map((w) => w.distance).toList();
+    _totalRunDistance = totalRunDistanceList.reduce((current, next) => current + next);
+    final result = (totalRunDistance / _goal) * 100;
     return double.parse(result.toStringAsFixed(0));
   }
 
@@ -94,14 +94,14 @@ class RunBloc with ChangeNotifier {
   void insertDummyData() {
     isHKAuthorized = true;
     existsWorkout = true;
-    _runDistance = 50;
-    final result = (runDistance / goal) * 100;
+    _totalRunDistance = 50;
+    final result = (totalRunDistance / goal) * 100;
     _runPercentage = double.parse(result.toStringAsFixed(0));
     notifyListeners();
   }
 
   void clear() {
-    _runDistance = null;
+    _totalRunDistance = null;
     _runPercentage = null;
     _workouts = null;
     isHKAuthorized = false;
